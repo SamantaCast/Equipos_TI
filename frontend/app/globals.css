@@ -1,0 +1,58 @@
+/* FUENTES */
+
+@font-face {
+  font-family: "Titulo";
+  src: url("/fonts/titulo.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "Subtitulo";
+  src: url("/fonts/subtitulo.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "Texto";
+  src: url("/fonts/texto.otf") format("opentype");
+}
+
+/* VARIABLES GLOBALES */
+
+:root {
+  --vino: #8a2036;
+  --vino-oscuro: #56212f;
+  --dorado: #a5824e;
+  --dorado-oscuro: #72581f;
+  --blanco: #ffffff;
+  --texto: #4a3b34;
+  --borde: rgba(165, 130, 78, 0.85);
+  --sombra: rgba(86, 33, 47, 0.18);
+}
+
+/* RESET GENERAL */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* BODY */
+
+html,
+body {
+  width: 100%;
+  min-height: 100%;
+  font-family: "Texto", Arial, sans-serif;
+  color: var(--texto);
+}
+
+body {
+  overflow-x: hidden;
+  background: linear-gradient(
+    180deg,
+    #ffffff 0%,
+    #f7f1e7 38%,
+    #eadfcb 74%,
+    #d3bb8b 100%
+  );
+}

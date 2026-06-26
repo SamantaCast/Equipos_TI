@@ -1,0 +1,912 @@
+/* ==================================================
+   DASHBOARD GENERAL
+================================================== */
+.dash-page {
+  min-height: 100vh;
+
+  background: linear-gradient(
+    180deg,
+    #ffffff 0%,
+    #f8f1e6 42%,
+    #d3bb8b 100%
+  );
+
+  color: var(--vino-oscuro);
+}
+/* ==================================================
+   HEADER
+================================================== */
+
+.dash-header {
+  width: 100%;
+
+  background: var(--blanco);
+
+  border-bottom: 4px solid var(--dorado);
+
+  box-shadow: 0 2px 10px rgba(86, 33, 47, 0.12);
+}
+
+.dash-header-inner {
+
+    width:100%;
+
+    max-width:none;
+
+    margin:0;
+
+    padding:8px 28px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    box-sizing:border-box;
+
+}
+
+/* ==================================================
+   LOGOS
+================================================== */
+
+.dash-logos {
+  display: flex;
+
+  align-items: center;
+
+  gap: 24px;
+
+  flex-wrap: wrap;
+}
+
+.dash-logos img {
+  height: 52px;
+
+  width: auto;
+
+  object-fit: contain;
+
+  display: block;
+}
+
+/* ==================================================
+   USUARIO / MENÚ DE SESIÓN
+================================================== */
+
+.usuario-menu {
+  position: relative;
+}
+
+.usuario-btn {
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  padding: 10px 16px;
+
+  background: #ffffff00;
+
+  border: 1px solid #e6d7bf00;
+
+  border-radius: 14px;
+
+  color: var(--vino);
+
+  cursor: pointer;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.usuario-avatar {
+  width: 44px;
+
+  height: 44px;
+
+  border-radius: 50%;
+
+  background: #f2f2f2;
+
+  color: #777;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+}
+
+.usuario-btn strong {
+  display: block;
+
+  font-size: 15px;
+
+  text-align: left;
+}
+
+.usuario-btn p {
+  margin: 0;
+
+  font-size: 13px;
+
+  color: #666;
+
+  text-align: left;
+}
+
+/* ==================================================
+   MENÚ DESPLEGABLE
+================================================== */
+
+.menu-dropdown {
+  position: absolute;
+
+  top: calc(100% + 10px);
+
+  right: 0;
+
+  min-width: 220px;
+
+  background: #ffffff;
+
+  border-radius: 16px;
+
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+
+  overflow: hidden;
+
+  z-index: 1000;
+}
+
+.menu-dropdown button {
+  width: 100%;
+
+  padding: 14px 18px;
+
+  border: none;
+
+  background: transparent;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  font-size: 15px;
+
+  cursor: pointer;
+}
+
+.menu-dropdown button:hover {
+  background: #f5f5f5;
+}
+
+/* ==================================================
+   CONTENIDO PRINCIPAL
+================================================== */
+.dash-content{
+
+    width:100%;
+
+    max-width:none;
+
+    margin:0;
+
+    padding:6px 15px 20px;
+
+    box-sizing:border-box;
+
+}
+/* ==================================================
+   PANEL PRINCIPAL
+================================================== */
+
+.dash-panel {
+
+
+  margin-bottom: 15px;
+
+  background: transparent;
+
+  border: none;
+
+  border-radius: 20px;
+   padding:10px 6px 24px;
+
+    margin:0;
+}
+
+/* ==================================================
+   ENCABEZADO DEL DASHBOARD
+================================================== */
+
+.dash-topbar{
+
+     margin:10px 0 25px;
+
+}
+
+.dash-topbar h1{
+
+    margin:0;
+
+    font-size:42px;
+
+    font-family:"Titulo";
+
+    color:var(--vino);
+
+    line-height:1;
+
+}
+
+.dash-topbar p {
+  margin-top: 12px;
+
+  color: #6b5a45;
+
+  font-size: 16px;
+
+  font-family: "Texto", sans-serif;
+}
+/* ==================================================
+   FILTROS
+================================================== */
+.dash-filters-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 12px 0 8px;
+}
+
+.dash-filters-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  flex-wrap: wrap;
+}
+.dash-search-row {
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  margin-bottom:18px;
+}
+
+/*NUEVO REGISTRO BOOTON*/
+.dash-actions-row {
+  display: flex;
+
+  justify-content: flex-end;
+
+  margin-top: 8px;
+
+ margin-bottom:10px;
+}
+
+.dash-btn-new {
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  padding: 14px 24px;
+
+  border: none;
+
+  border-radius: 14px;
+
+  background: var(--vino);
+
+  color: white;
+
+  font-family: "Texto";
+
+  font-size: 15px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+.dash-btn-new:hover {
+  background: var(--vino-oscuro);
+
+  transform: translateY(-2px);
+
+  box-shadow: 0 8px 20px rgba(139, 30, 63, 0.25);
+}
+
+.dash-btn-new:active {
+  transform: translateY(0);
+}
+
+/* ==================================================
+   BUSCADOR
+================================================== */
+
+.dash-search {
+  width: 100%;
+
+  max-width: 570px;
+
+  height: 45px;
+
+  padding: 1px 20px 0;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 14px;
+
+  background: #ffffff;
+
+  border: 2px solid rgba(195, 154, 82, 0.5);
+
+  border-radius: 14px;
+
+  transition: all 0.2s ease;
+   margin-bottom: 0;
+}
+
+.dash-search svg {
+  color: var(--vino);
+}
+
+.dash-search:focus-within {
+  border-color: #8a20358c;
+
+  box-shadow: 0 0 0 2px rgba(138, 32, 54, 0.08);
+}
+
+.dash-search input {
+  flex: 1;
+
+  border: none;
+
+  outline: none;
+
+  background: transparent;
+
+  color: var(--vino-oscuro);
+
+  font-size: 15px;
+
+  font-family: "Texto", sans-serif;
+}
+
+.dash-search input::placeholder {
+  color: #857869;
+}
+
+/* ==================================================
+   BOTÓN RESTABLECER FILTROS
+================================================== */
+
+.dash-refresh-btn {
+  width: 45px;
+
+  height: 45px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  background: #ffffff;
+
+  border: 1px solid #c39a52;
+
+  border-radius: 10px;
+
+  color: var(--vino);
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.dash-refresh-btn:hover {
+  background: #faf6f0;
+
+  border-color: var(--vino);
+}
+
+.dash-refresh-btn:active {
+  transform: translateY(0);
+}
+
+.dash-refresh-btn svg {
+  transition: transform 0.3s ease;
+}
+
+.dash-refresh-btn:hover svg {
+  transform: rotate(90deg);
+}
+/* ==================================================
+   TARJETAS DE FILTROS
+================================================== */
+.dash-filter-card {
+    width: 133px;
+    height: 58px;
+    padding: 8px 14px;
+
+    background: #ffffff;
+    border: 1px solid #e6d7bf;
+    border-radius: 14px;
+
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    box-sizing: border-box;
+
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+
+    transition: all 0.2s ease;
+}
+
+.dash-filter-card:hover {
+    border-color: #c39a52;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+    transform: translateY(-1px);
+}
+
+/* ICONO */
+.dash-filter-icon {
+    flex-shrink: 0;
+    color: #7a6752;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* CONTENIDO */
+.dash-filter-content {
+    flex: 1;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: space-between;
+
+    min-width: 0;
+
+    height: 100%;
+}
+
+/* ETIQUETA */
+.dash-filter-label {
+    color: #7a6752;
+
+    font-family: "Texto";
+
+    font-size: 11px;
+
+    font-weight: 700;
+
+    line-height: 1.1;
+
+    height: 24px; 
+
+    display: flex;
+
+    align-items: center;
+}
+/* CONTENEDOR DEL SELECT */
+.dash-select-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+/* SELECT */
+.dash-select-wrapper select {
+    width: 100%;
+    border: none;
+    outline: none;
+    background: transparent;
+
+    color: var(--vino);
+    font-family: "Texto";
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.2;
+
+    cursor: pointer;
+
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+    padding: 2px 22px 2px 0;
+
+    transition: color 0.2s ease;
+}
+
+.dash-select-wrapper select:hover,
+.dash-select-wrapper select:focus {
+    color: var(--vino);
+}
+
+/* FLECHA */
+.dash-select-arrow {
+    position: absolute;
+    top: 50%;
+    right: 0;
+
+    transform: translateY(-50%);
+
+    color: #7a6752;
+
+    transition:
+        color 0.2s ease,
+        transform 0.2s ease;
+
+    pointer-events: none;
+}
+
+.dash-filter-card:hover .dash-select-arrow,
+.dash-select-wrapper:focus-within .dash-select-arrow {
+    color: var(--vino);
+}
+
+.dash-select-wrapper:focus-within .dash-select-arrow {
+    transform: translateY(-50%) rotate(180deg);
+}
+.dash-select-wrapper select option {
+    background: #ffffff;
+    color: var(--vino);
+    font-family: "Texto";
+    font-size: 14px;
+    font-weight: 500;
+    padding: 10px;
+}
+
+/* ==================================================
+   BOTONES EXPORTAR
+================================================== */
+.dash-export-buttons{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+}
+.dash-actions-row{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-top:8px;
+
+    margin-bottom:10px;
+
+}
+.dash-btn-excel,
+.dash-btn-pdf{
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+
+    padding:10px 24px;
+
+    line-height:1;
+
+    border:none;
+    border-radius:10px;
+
+    font-family:"Texto";
+    font-size:15px;
+    font-weight:600;
+
+    cursor:pointer;
+}
+
+
+.dash-btn-excel:hover,
+.dash-btn-pdf:hover{
+
+    transform:translateY(-2px);
+
+    box-shadow:0 8px 20px rgba(0,0,0,.18);
+
+}
+.dash-btn-excel{
+    background:#217346;
+    color:#fff;
+    border:none;
+}
+
+.dash-btn-excel:hover{
+    background:#185c37;
+}
+
+.dash-btn-pdf{
+    background:#B4232C;
+    color:#fff;
+    border:none;
+}
+
+.dash-btn-pdf:hover{
+    background:#951b22;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*=====================================================
+  MENÚ DEL USUARIO
+=====================================================*/
+
+.usuario-menu{
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+}
+
+/*=====================================================
+  BOTÓN USUARIO
+=====================================================*/
+
+.usuario-btn{
+
+    display:flex;
+    align-items:center;
+    gap:14px;
+
+    background:#ffffff00;
+
+    border:none;
+    border-radius:50px;
+
+    padding:10px 18px;
+
+    cursor:pointer;
+
+    transition:.25s;
+
+    box-shadow:
+        0 4px 16px rgba(0, 0, 0, 0);
+}
+
+.usuario-btn:hover{
+
+    background:#faf7f400;
+
+    transform:translateY(-1px);
+}
+
+.usuario-avatar{
+
+    width:44px;
+    height:44px;
+
+    border-radius:50%;
+
+    background:#f3f3f3;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    color:#8A2036;
+}
+
+.usuario-btn strong{
+
+    display:block;
+
+    font-family:Subtitulo;
+    font-size:16px;
+
+    color:#8A2036;
+
+    text-align:left;
+}
+
+.usuario-btn p{
+
+    margin:2px 0 0;
+
+    font-family:Texto;
+    font-size:13px;
+
+    color:#666;
+
+    text-align:left;
+}
+
+.usuario-arrow{
+
+    margin-left:8px;
+
+    color:#8A2036;
+
+    transition:.25s ease;
+}
+
+.usuario-arrow.open{
+
+    transform:rotate(180deg);
+}
+
+/*=====================================================
+  MENÚ DESPLEGABLE
+=====================================================*/
+
+.menu-dropdown{
+
+    position:absolute;
+
+    top:calc(100% + 10px);
+
+    right:0;
+
+    width:245px;
+
+    border-radius:18px;
+
+    overflow:hidden;
+
+    z-index:9999;
+ background: transparent;
+
+    box-shadow: none;
+
+    border: none;
+}
+@keyframes menuOpen{
+
+    from{
+
+        opacity:0;
+        transform:translateY(-10px);
+
+    }
+
+    to{
+
+        opacity:1;
+        transform:translateY(0);
+
+    }
+
+}
+
+/*=====================================================
+  OPCIÓN DEL MENÚ
+=====================================================*/
+.menu-item{
+
+    width:100%;
+    display:flex;
+    align-items:center;
+    gap:14px;
+    outline:none;
+    cursor:pointer;
+
+    transition:all .2s ease;
+
+    font-family:Texto;
+    font-size:15px;
+
+    color:#2D2D2D;
+
+     background: transparent;
+
+    border: none;
+
+    box-shadow: none;
+
+    padding: 10px 18px;
+}
+.menu-item:hover{
+  background: rgba(138, 32, 54, 0.08);
+
+    color:#8A2036;
+
+    transform:translateX(4px);
+}
+
+.menu-item:active{
+
+    transform:translateX(2px) scale(.98);
+}
+/*=====================================================
+  ICONO
+=====================================================*/
+
+.menu-icon{
+
+    width:36px;
+    height:36px;
+
+    border:none;
+
+    outline:none;
+
+    border-radius:50%;
+
+    background:#8A2036;
+
+    color:#fff;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+.menu-item:hover .menu-icon{
+
+    background:#A62443;
+
+    transform:rotate(-8deg) scale(1.08);
+
+    box-shadow:0 6px 16px rgba(138,32,54,.35);
+}
+.menu-item span{
+
+    font-family:Subtitulo;
+    font-size:15px;
+}

@@ -1,0 +1,190 @@
+/* TABLET GRANDE */
+
+@media (max-width: 1100px) {
+
+  .dash-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+}
+
+/* TABLET */
+
+@media (max-width: 900px) {
+
+  .logos {
+    gap: 22px;
+  }
+
+  .logos img {
+    height: 46px;
+  }
+
+  .login-card {
+    padding: 24px 26px 20px;
+  }
+
+}
+
+
+
+/* MOVIL */
+
+@media (max-width: 768px) {
+
+  /* LOGIN */
+
+  .navbar {
+    padding: 8px 16px;
+  }
+
+  .login-page {
+    padding: 18px 12px 16px;
+    min-height: calc(100vh - 76px);
+  }
+
+  .login-card {
+    padding: 22px 18px 18px;
+    border-radius: 28px;
+  }
+
+  .user-circle {
+    width: 112px;
+    height: 112px;
+    margin-bottom: 20px;
+  }
+
+  .user-circle span {
+    font-size: 50px;
+  }
+
+  .input-group {
+    height: 56px;
+    border-radius: 30px;
+  }
+
+  .input-group input {
+    font-size: 15px;
+  }
+
+  .btn-login {
+    height: 60px;
+    font-size: 17px;
+    border-radius: 30px;
+    margin-top: 14px;
+  }
+
+  .login-options {
+    font-size: 14px;
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-start;
+    margin-top: 16px;
+  }
+
+  /* DASHBOARD */
+
+  .dash-logos {
+    gap: 14px;
+  }
+
+  .dash-logos img {
+    height: 40px;
+  }
+
+  .dash-topbar h1 {
+    font-size: 24px;
+  }
+
+  .dash-panel {
+    padding: 18px;
+    border-radius: 22px;
+  }
+
+  .dash-modal {
+    padding: 18px;
+    border-radius: 22px;
+  }
+
+  .dash-modal-head h2 {
+    font-size: 22px;
+  }
+
+}
+
+/* MOVIL PEQUEÑO */
+
+@media (max-width: 480px) {
+
+  /* LOGIN */
+
+  .logos {
+    gap: 12px;
+  }
+
+  .logos img {
+    height: 38px;
+  }
+
+  .login-card {
+    border-radius: 22px;
+  }
+
+  .user-circle {
+    width: 100px;
+    height: 100px;
+  }
+
+  .user-circle span {
+    font-size: 44px;
+  }
+
+  .input-group {
+    height: 52px;
+    padding: 0 16px;
+  }
+
+  .btn-login {
+    height: 56px;
+    font-size: 16px;
+    letter-spacing: 1px;
+  }
+
+}
+
+
+/* ==================================================
+   RESPONSIVE
+================================================== */
+
+@media (max-width: 992px) {
+  .dash-search {
+    min-width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .dash-panel {
+    padding: 22px;
+  }
+
+  .dash-topbar h1 {
+    font-size: 38px;
+  }
+
+  .dash-btn-new {
+    width: 100%;
+
+    justify-content: center;
+
+    align-self: stretch;
+  }
+
+  .dash-filter-card {
+    flex: 1;
+
+    min-width: 180px;
+
+    width: 100%;
+  }
+}
