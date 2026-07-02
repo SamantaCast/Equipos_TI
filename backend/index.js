@@ -25,13 +25,12 @@ async function iniciarServidor() {
     const PORT =
       process.env.PORT || 5000;
 
-    app.listen(PORT, () => {
+//comentar
+    app.listen(PORT, "0.0.0.0", () => {
 
-      console.log(
-        `Servidor en http://localhost:${PORT}`
-      );
+    console.log(`Servidor iniciado en el puerto ${PORT}`);
 
-    });
+});
 
   } catch (error) {
 
@@ -61,14 +60,24 @@ app.get("/", (req, res) => {
 /* ==========================
    LOGIN
 ========================== */
-
 app.post("/api/login", async (req, res) => {
   try {
+
+    console.log("Body recibido:", req.body);
+
     const { usuario, password } = req.body;
+
+    console.log("Usuario:", usuario);
+
+    const usuarios = await db.collection("user").find().toArray();
+
+    console.log("Usuarios:", usuarios);
 
     const usuarioEncontrado = await db
       .collection("user")
       .findOne({ usuario });
+
+    console.log("Resultado:", usuarioEncontrado);
 
     if (!usuarioEncontrado) {
       return res.status(401).json({
@@ -94,7 +103,6 @@ app.post("/api/login", async (req, res) => {
 
   } catch (error) {
     console.error(error);
-
     res.status(500).json({
       mensaje: "Error del servidor",
     });

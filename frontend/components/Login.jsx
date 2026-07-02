@@ -57,35 +57,25 @@ export default function Login() {
 
   const iniciarSesion = async () => {
 
-    try {
+   try {
 
-      const respuesta = await fetch(
+  console.log(process.env.NEXT_PUBLIC_API_URL);
 
-        `${process.env.NEXT_PUBLIC_API_URL}/api/login`,
+  const respuesta = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/api/login`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        usuario,
+        password,
+      }),
+    }
+  );
 
-        {
-
-          method: "POST",
-
-          headers: {
-
-            "Content-Type": "application/json",
-
-          },
-
-          body: JSON.stringify({
-
-            usuario,
-
-            password,
-
-          }),
-
-        }
-
-      );
-
-      const datos = await respuesta.json();
+  const datos = await respuesta.json();
 
       /* ===========================================
          VALIDAR RESPUESTA

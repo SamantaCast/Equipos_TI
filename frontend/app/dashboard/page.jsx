@@ -898,40 +898,29 @@ useEffect(() => {
 ================================================== */
 
 const obtenerEquipos = async () => {
-
   try {
 
-    const respuesta = await fetch(
+    console.log("API:", process.env.NEXT_PUBLIC_API_URL);
 
-      `${process.env.NEXT_PUBLIC_API_URL}/api/equipos`
+    const url = `${process.env.NEXT_PUBLIC_API_URL}/api/equipos`;
 
-    );
+    console.log("URL:", url);
+
+    const respuesta = await fetch(url);
+
+    console.log("Status:", respuesta.status);
 
     const datos = await respuesta.json();
+
     console.log(datos);
 
     setData(datos);
 
-  }
-
-  catch (error) {
+  } catch (error) {
 
     console.error(error);
 
-    Swal.fire({
-
-      icon: "error",
-
-      title: "Error",
-
-      text: "No fue posible obtener la información.",
-
-      confirmButtonColor: "#8b1e3f",
-
-    });
-
   }
-
 };
 
 /* ==================================================
@@ -1261,8 +1250,7 @@ const handleSave = async () => {
     if (editingId === null) {
 
       const respuesta = await fetch(
-
-        `${process.env.NEXT_PUBLIC_API_URL}/api/equipos`,
+  `${process.env.NEXT_PUBLIC_API_URL}/api/equipos`,
 
         {
 
@@ -1305,8 +1293,7 @@ const handleSave = async () => {
     else {
 
       await fetch(
-
-        `${process.env.NEXT_PUBLIC_API_URL}/api/equipos/${editingId}`,
+  `${process.env.NEXT_PUBLIC_API_URL}/api/equipos/${editingId}`,
 
         {
 
@@ -1461,17 +1448,11 @@ const handleDelete = async (id) => {
        ELIMINAR EN MONGODB
     ============================================ */
 
-    await fetch(
-
-      `${process.env.NEXT_PUBLIC_API_URL}/api/equipos/${id}`,
-
-      {
-
-        method: "DELETE",
-
-      }
-
-    );
+   await fetch(
+  `${process.env.NEXT_PUBLIC_API_URL}/api/equipos/${id}`,
+  {
+  method: "DELETE",
+});
 
     /* ===========================================
        ACTUALIZAR TABLA
