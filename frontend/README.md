@@ -1,36 +1,222 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Sistema de Gestión de Equipos de Cómputo
 
-## Getting Started
+Sistema web desarrollado para la administración e inventario de equipos de cómputo. Permite registrar, consultar, editar, eliminar y exportar información de los activos informáticos de la organización.
 
-First, run the development server:
+---
+
+# Características
+
+- Inicio de sesión con autenticación mediante JWT.
+- Gestión completa de equipos de cómputo (CRUD).
+- Búsqueda general en tiempo real.
+- Filtros dinámicos por:
+  - Perfil.
+  - Modelo.
+  - Candado.
+  - Conectividad.
+  - Movilidad.
+  - Folio.
+  - Serie del monitor.
+  - Serie del mouse.
+  - Modelo del teclado.
+- Paginación configurable.
+- Exportación a:
+  - Excel (.xlsx)
+  - PDF (.pdf)
+- Diseño responsive.
+- Interfaz moderna desarrollada con Next.js.
+
+---
+
+# Tecnologías utilizadas
+
+## Frontend
+
+- Next.js
+- React
+- TypeScript
+- CSS
+- Lucide React
+- SweetAlert2
+- ExcelJS
+- jsPDF
+- jsPDF-AutoTable
+
+## Backend
+
+- Node.js
+- Express.js
+- MongoDB
+- Mongoose
+- JSON Web Token (JWT)
+- bcrypt
+
+---
+
+# Estructura del proyecto
+
+```
+Control-Equipos/
+
+│
+├── frontend/
+│   ├── app/
+│   ├── components/
+│   ├── styles/
+│   ├── utils/
+│   └── public/
+│
+├── backend/
+│   ├── controllers/
+│   ├── middleware/
+│   ├── models/
+│   ├── routes/
+│   └── server.js
+│
+└── README.md
+```
+
+---
+
+# Instalación
+
+## 1. Clonar el repositorio
+
+```bash
+git clone https://github.com/usuario/control-equipos.git
+```
+
+---
+
+## 2. Instalar dependencias
+
+### Frontend
+
+```bash
+cd frontend
+npm install
+```
+
+### Backend
+
+```bash
+cd backend
+npm install
+```
+
+---
+
+# Variables de entorno
+
+## Frontend
+
+Crear un archivo:
+
+```
+frontend/.env.local
+```
+
+Contenido:
+
+```env
+NEXT_PUBLIC_API_URL=http://localhost:5000
+```
+
+---
+
+## Backend
+
+Crear un archivo:
+
+```
+backend/.env
+```
+
+Contenido:
+
+```env
+PORT=5000
+
+MONGODB_URI=TU_CADENA_DE_CONEXIÓN
+
+JWT_SECRET=TU_CLAVE_SECRETA
+```
+
+---
+
+# Ejecutar el proyecto
+
+## Backend
+
+```bash
+cd backend
+
+npm start
+```
+
+o
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Frontend
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+cd frontend
 
-## Learn More
+npm run dev
+```
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# Funcionalidades
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Autenticación
 
-## Deploy on Vercel
+- Inicio de sesión.
+- Protección mediante JWT.
+- Cierre de sesión.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Gestión de equipos
+
+- Registrar equipo.
+- Editar equipo.
+- Eliminar equipo.
+- Buscar registros.
+- Filtrar información.
+- Paginación.
+
+---
+
+## Exportación
+
+El sistema permite generar reportes en:
+
+- Excel (.xlsx)
+- PDF (.pdf)
+
+Incluyendo:
+
+- Logos institucionales.
+- Fecha y hora de generación.
+- Total de registros.
+- Diseño profesional para impresión.
+
+---
+
+# Autor
+
+Departamento de Informática
+
+Leche para el Bienestar S.A. de C.V.
+
+---
+
+# Licencia
+
+Este proyecto fue desarrollado para uso interno de la organización.

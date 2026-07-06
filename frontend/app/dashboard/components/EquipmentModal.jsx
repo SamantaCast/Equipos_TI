@@ -1,47 +1,58 @@
 "use client";
 
-/* ==================================================
-   IMPORTACIONES
-================================================== */
+/* IMPORTACIONES */
 
+// Iconos utilizados dentro del modal.
 import {
   ClipboardPlus,
   Save,
   X,
 } from "lucide-react";
 
-/* ==================================================
-   PROPIEDADES DEL COMPONENTE
-================================================== */
+/* COMPONENTE */
 
+/**
+ * Modal para agregar o editar un equipo de cómputo.
+ */
 export default function EquipmentModal({
 
-  /* Estado */
+  /* ESTADO */
 
+  // Indica si el modal debe mostrarse.
   showForm,
 
+  // Identificador del registro que se está editando.
+  // Si es null, se trata de un nuevo registro.
   editingId,
 
+  // Paso actual del formulario.
   pasoActual,
 
+  // Función para cambiar el paso actual.
   setPasoActual,
 
-  /* Información */
+  /* INFORMACIÓN */
 
+  // Grupos de campos que conforman el formulario.
   fieldGroups,
 
-  /* Funciones */
+  /* FUNCIONES */
 
+  // Devuelve el icono correspondiente a cada grupo.
   getGroupIcon,
 
+  // Renderiza cada campo del formulario.
   renderField,
 
+  // Cierra el modal.
   closeForm,
 
+  // Guarda la información capturada.
   handleSave,
 
 }) {
 
+  // Si el formulario no debe mostrarse, no se renderiza el componente.
   if (!showForm) {
 
     return null;
@@ -52,73 +63,56 @@ export default function EquipmentModal({
 
     <>
 
-      {/* ===========================================
-          FONDO DEL MODAL
-      ============================================ */}
+      {/* FONDO DEL MODAL */}
 
       <div className="dash-modal-backdrop">
 
-        {/* =======================================
-            CONTENEDOR DEL MODAL
-        ======================================== */}
+        {/* CONTENEDOR PRINCIPAL */}
 
         <div className="dash-modal">
 
-          {/* =======================================
-              ENCABEZADO
-          ======================================== */}
+          {/* ENCABEZADO DEL MODAL */}
 
           <div className="dash-modal-head">
 
+            {/* Título e icono */}
+
             <div className="dash-modal-title">
-
               <div className="dash-modal-logo">
-
                 <ClipboardPlus size={34} />
-
               </div>
-
               <div>
 
                 <h2>
-
                   {editingId === null
                     ? "Agregar registro"
                     : "Editar registro"}
-
                 </h2>
 
                 <p>
-
                   Complete la información correspondiente al equipo de cómputo.
-
                 </p>
 
               </div>
-
             </div>
 
-            {/* Botón cerrar */}
-
+            {/* Botón para cerrar el formulario */}
             <button
               onClick={closeForm}
               className="dash-icon-btn"
             >
-
               <X size={28} />
-
             </button>
-
           </div>
 
-          {/* =======================================
-              PASOS DEL FORMULARIO
-          ======================================== */}
+
+          {/* STEPPER DEL FORMULARIO */}
 
           <div className="dash-stepper">
 
             {fieldGroups.map((group, index) => {
 
+              // Número del paso mostrado.
               const numeroPaso = index + 1;
 
               return (
@@ -147,16 +141,16 @@ export default function EquipmentModal({
             })}
 
           </div>
-                    {/* =======================================
-              CONTENIDO DEL FORMULARIO
-          ======================================== */}
+
+
+          {/* CONTENIDO DEL PASO ACTUAL */}
 
           <div className="dash-form-scroll">
 
             <div className="dash-group">
 
+              {/* Título del grupo */}
               <h3>
-
                 <span className="dash-group-icon">
 
                   {getGroupIcon(
@@ -173,9 +167,7 @@ export default function EquipmentModal({
 
               </h3>
 
-              {/* ===============================
-                  CAMPOS DEL PASO ACTUAL
-              ================================ */}
+              {/* CAMPOS DEL FORMULARIO */}
 
               <div className="dash-form-grid">
 
@@ -188,55 +180,42 @@ export default function EquipmentModal({
                 )}
 
               </div>
-
             </div>
-
           </div>
 
-          {/* =======================================
-              PIE DEL MODAL
-          ======================================== */}
+
+          {/* PIE DEL MODAL */}
 
           <div className="dash-modal-actions">
 
-            {/* ===============================
-                INFORMACIÓN
-            ================================ */}
+            {/* INFORMACIÓN PARA EL USUARIO */}
 
             <div className="dash-modal-info">
 
               <div className="dash-modal-info-icon">
-
                 i
-
               </div>
 
               <div>
 
                 <strong>
-
                   Verifique la información
-
                 </strong>
 
                 <p>
-
                   Asegúrese de que los datos capturados sean correctos.
-
                 </p>
 
               </div>
-
+              
             </div>
 
-            {/* ===============================
-                NAVEGACIÓN ENTRE PASOS
-            ================================ */}
+
+            {/* CONTROLES DE NAVEGACIÓN */}
 
             <div className="dash-modal-navigation">
 
-              {/* Paso anterior */}
-
+              {/* Botón para regresar al paso anterior */}
               <button
                 className="dash-nav-btn"
                 onClick={() =>
@@ -251,16 +230,14 @@ export default function EquipmentModal({
 
               </button>
 
-              {/* Indicador */}
-
+              {/* Indicador del paso actual */}
               <span className="dash-nav-text">
 
                 {pasoActual} de {fieldGroups.length}
 
               </span>
 
-              {/* Paso siguiente */}
-
+              {/* Botón para avanzar al siguiente paso */}
               <button
                 className="dash-nav-btn"
                 onClick={() =>
@@ -278,8 +255,7 @@ export default function EquipmentModal({
 
               </button>
 
-              {/* Guardar */}
-
+              {/* Botón para guardar la información */}
               <button
                 className="dash-btn dash-btn-primary"
                 onClick={handleSave}

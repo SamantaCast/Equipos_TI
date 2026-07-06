@@ -1,213 +1,204 @@
-/* MODAL BACKDROP */
+/* FONDO DEL MODAL
+   Capa oscura que cubre la pantalla mientras el
+   formulario modal permanece abierto. */
 
 .dash-modal-backdrop {
+
   position: fixed;
   inset: 0;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   padding: 18px;
-
   background: rgba(0, 0, 0, 0.42);
   backdrop-filter: blur(3px);
-
   z-index: 50;
+
 }
 
 
-/* CONTENEDOR MODAL */
+/* CONTENEDOR PRINCIPAL DEL MODAL
+   Tarjeta principal donde se muestra el formulario. */
 
-/* ==========================================
-   CONTENEDOR MODAL
-========================================== */
 .dash-modal {
-     width: min(1250px, 98vw);
-    height: 96vh;
 
-    display: flex;
-    flex-direction: column;
+  width: min(1250px, 98vw);
+  height: 96vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: #ffffff;
+  border: 1px solid rgba(165, 130, 78, 0.18);
+  border-radius: 26px;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.22);
+  padding: 0;
 
-    overflow: hidden;
-
-    background: #ffffff;
-
-    border: 1px solid rgba(165, 130, 78, 0.18);
-    border-radius: 26px;
-
-    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.22);
-
-    padding: 0;
 }
-/* ==========================================
-   CABECERA MODAL
-========================================== */
+
+
+/* CABECERA DEL MODAL
+   Contiene el título, descripción y botón para
+   cerrar el formulario. */
+
 .dash-modal-head {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
 
-    gap: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 18px 32px 14px;
+  background: #efe3d0;
+  border-bottom: 2px solid #b58a4acb;
+  flex-shrink: 0;
 
-    padding: 18px 32px 14px;
-
-    background: #efe3d0;
-
-    border-bottom: 2px solid #b58a4acb;
-     flex-shrink: 0;
 }
+
+
+/* TÍTULO DEL MODAL */
+
 .dash-modal-title {
+
   display: flex;
   align-items: center;
   gap: 18px;
+
 }
+
 .dash-modal-title h2 {
-    margin: 0;
 
-    color: var(--vino);
+  margin: 0;
+  color: var(--vino);
+  font-size: 38px;
+  font-weight: 700;
+  line-height: 1.1;
+  font-family: "Titulo";
 
-    font-size: 38px;
-
-    font-weight: 700;
-
-    line-height: 1.1;
-
-    font-family: "Titulo";
 }
 
 .dash-modal-title p {
-    margin: 6px 0 0;
 
-    color: #8b6a2e;
+  margin: 6px 0 0;
+  color: #8b6a2e;
+  font-size: 15px;
+  font-family: "Texto", sans-serif;
 
-    font-size: 15px;
-
-    font-family: "Texto", sans-serif;
 }
-/* ICONO PRINCIPAL */
+
+
+/* ICONO PRINCIPAL DEL MODAL */
 
 .dash-modal-logo {
+
   width: 60px;
   height: 60px;
-
   border-radius: 50%;
-
   background: #f5ecec;
-
   color: var(--vino);
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   flex-shrink: 0;
-
   box-shadow: 0 8px 18px rgba(138, 32, 54, 0.12);
+
 }
 
-/* BOTON CERRAR */
+
+/* BOTÓN CERRAR */
 
 .dash-icon-btn {
+
   border: none;
   border-radius: 50%;
-
   background: transparent;
-
   color: var(--vino-oscuro);
-
   cursor: pointer;
-
   padding: 10px;
-
   transition: 0.2s ease;
+
 }
 
 .dash-icon-btn:hover {
+
   background: #f7f2eb;
+
 }
 
-/* SCROLL FORMULARIO */
-/* ==========================================
-   ÁREA SCROLL DEL FORMULARIO
-========================================== */
+
+/* ÁREA DE DESPLAZAMIENTO
+   Contenedor con scroll para el contenido del
+   formulario. */
+
 .dash-form-scroll {
-    flex: 1;
-    overflow-y: auto;
-    overflow-x: hidden;
-    padding: 1px 35px 0;
-     flex: 1;
-    min-height: 0;
+
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 1px 35px 0;
+
 }
 
-/* SECCIONES DEL FORMULARIO */
+
+/* SECCIÓN DEL FORMULARIO
+   Agrupa los campos correspondientes a cada paso. */
 
 .dash-group {
-   margin-bottom: 12px;
-     margin-bottom: 0;
 
+  margin-bottom: 0;
   overflow: hidden;
-
   background: #ffffff;
-
   border: 1px solid #e6d7bf;
   border-radius: 20px;
-
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
-  
+
 }
 
-/* TITULO DE SECCION */
+
+/* TÍTULO DE LA SECCIÓN */
 
 .dash-group h3 {
+
   margin: 0;
-
   padding: 10px 22px;
-
-
   display: flex;
   align-items: center;
   gap: 14px;
-
   background: linear-gradient(
     90deg,
     #faf7f7,
     #fdfcfc
   );
-
   border-bottom: 1px solid #e6d7bf;
-
   color: var(--vino);
-
   font-size: 20px;
-
   font-family: "Subtitulo";
+
 }
 
-/* ICONOS DE SECCION */
+
+/* ICONO DE LA SECCIÓN */
 
 .dash-group-icon {
+
   width: 48px;
   height: 48px;
-
   border-radius: 50%;
-
   background: #9b1c3f;
-
   color: #ffffff;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   flex-shrink: 0;
-
   box-shadow: 0 8px 20px rgba(138, 32, 54, 0.2);
+
 }
 
-/* GRID FORMULARIO */
+
+/* CUADRÍCULA DEL FORMULARIO
+   Distribuye los campos en dos columnas. */
 
 .dash-form-grid {
+
   padding: 10px 24px 20px;
   display: grid;
   grid-template-columns: repeat(
@@ -217,494 +208,470 @@
   gap: 12px 28px;
 }
 
-/* CAMPOS */
+
+/* CAMPO DEL FORMULARIO */
 
 .dash-field {
+
   display: block;
+
 }
 
 .dash-field span {
+
   display: block;
-
   margin-bottom: 8px;
-
   color: var(--vino-oscuro);
-
   font-size: 15px;
   font-weight: 700;
-
   letter-spacing: 0.3px;
-
   font-family: "Subtitulo";
+
 }
 
-/* INPUTS Y SELECTS */
+
+/* CAMPOS DE CAPTURA
+   Estilos compartidos para inputs y listas
+   desplegables. */
 
 .dash-input {
+
   width: 100%;
   height: 50px;
-
   background: #fcfbf8;
-
   border: 1px solid #c39a52;
   border-radius: 14px;
-
   box-shadow:
     inset 0 1px 2px rgba(0, 0, 0, 0.03);
-
   padding: 0 16px;
-
   outline: none;
-
   color: var(--vino-oscuro);
-
   font-size: 14px;
-
   transition:
     border-color 0.2s ease,
     box-shadow 0.2s ease,
     transform 0.2s ease;
+
 }
 
+
+/* SELECT PERSONALIZADO
+   Agrega una flecha personalizada a los controles
+   tipo lista. */
+
 .dash-field select.dash-input {
+
   padding-right: 50px;
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
-
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%238a2036' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
-
   background-repeat: no-repeat;
   background-position: right 18px center;
+
 }
 
-.dash-input:focus {
-  border-color: var(--vino);
 
+/* ESTADO ENFOCADO DEL CAMPO */
+
+.dash-input:focus {
+
+  border-color: var(--vino);
   box-shadow:
     0 0 0 4px rgba(138, 32, 54, 0.1);
-
   transform: translateY(-1px);
+
 }
 
 .dash-input::placeholder {
+
   color: #8d8173;
+
 }
 
-/* INPUTS CON ICONOS */
+
+/* CONTENEDOR DEL CAMPO
+   Permite posicionar correctamente el icono. */
 
 .dash-input-wrapper {
+
   position: relative;
+
 }
 
-.dash-input-icon {
-  position: absolute;
 
+/* ICONO DEL CAMPO */
+
+.dash-input-icon {
+
+  position: absolute;
   left: 14px;
   top: 50%;
-
   transform: translateY(-50%);
-
   width: 40px;
   height: 40px;
-
   border-radius: 50%;
-
   border: 1px solid #e7d8be;
-
   background: #f8efe2;
-
   color: var(--vino);
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   z-index: 2;
-
   transition: all 0.2s ease;
+
 }
+
+
+/* ESPACIADO DEL CAMPO
+   Deja espacio para el icono izquierdo. */
 
 .dash-input-wrapper .dash-input {
+
   padding-left: 58px;
+
 }
+
+
+/* EFECTO DEL ICONO
+   Cambia el estilo del icono cuando el campo recibe
+   el foco. */
 
 .dash-input-wrapper:focus-within .dash-input-icon {
+
   background: #f3dfe4;
-
   border-color: var(--vino);
-
   color: var(--vino);
+
 }
 
-/* FOOTER MODAL */
 
-/* ==========================================
-   FOOTER MODAL
-========================================== */
+/* PIE DEL MODAL
+   Contenedor inferior que agrupa la información y
+   los controles de navegación del formulario. */
+
 .dash-modal-actions {
-    flex-shrink: 0;
 
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  flex-shrink: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding: 14px 32px;
+  background: #f6ecdc;
+  border-top: 1px solid #c39a52;
 
-    gap: 20px;
-
-    padding: 14px 32px;
-
-    background: #f6ecdc;
-
-    border-top: 1px solid #c39a52;
 }
+
+
+/* CONTROLES DE NAVEGACIÓN
+   Agrupa los botones para cambiar de paso y guardar
+   el formulario. */
 
 .dash-modal-navigation {
-    display: flex;
-    align-items: center;
-    gap: 12px;
+
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
 }
 
 .dash-modal-navigation .dash-btn-primary {
-    margin-left: 8px;
 
-    width: auto;
+  margin-left: 8px;
+  width: auto;
+  padding: 0 20px;
+  height: 42px;
 
-    padding: 0 20px;
-
-    height: 42px;
 }
+
+
+/* BOTONES DE NAVEGACIÓN
+   Permiten avanzar o retroceder entre los pasos
+   del formulario. */
+
 .dash-nav-btn {
-    width: 40px;
 
-    height: 40px;
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--dorado);
+  border-radius: 50%;
+  background: #ffffff;
+  color: var(--vino);
+  font-size: 20px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
 
-    border: 1px solid var(--dorado);
-
-    border-radius: 50%;
-
-    background: #ffffff;
-
-    color: var(--vino);
-
-    font-size: 20px;
-
-    font-weight: 700;
-
-    cursor: pointer;
-
-    transition: all 0.2s ease;
 }
 
 .dash-nav-btn:hover:not(:disabled) {
-    background: #f7f0e5;
 
-    transform: translateY(-1px);
+  background: #f7f0e5;
+  transform: translateY(-1px);
+
 }
 
 .dash-nav-btn:disabled {
-    opacity: 0.35;
 
-    cursor: not-allowed;
+  opacity: 0.35;
+  cursor: not-allowed;
+
 }
+
+
+/* INDICADOR DE PASO
+   Muestra el paso actual y el total de pasos del
+   formulario. */
 
 .dash-nav-text {
-    min-width: 70px;
 
-    text-align: center;
+  min-width: 70px;
+  text-align: center;
+  color: var(--vino);
+  font-family: "Subtitulo";
+  font-size: 16px;
+  font-weight: 700;
 
-    color: var(--vino);
-
-    font-family: "Subtitulo";
-
-    font-size: 16px;
-
-    font-weight: 700;
 }
-/* BLOQUE INFORMATIVO */
+
+
+/* BLOQUE INFORMATIVO
+   Muestra un mensaje de apoyo al usuario antes de
+   guardar la información. */
 
 .dash-modal-info {
+
   display: flex;
   align-items: center;
   gap: 14px;
+
 }
 
+
+/* ICONO INFORMATIVO */
+
 .dash-modal-info-icon {
+
   width: 50px;
   height: 50px;
-
   border-radius: 50%;
-
   background: #f3e6cc;
-
   color: var(--dorado);
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   font-size: 22px;
   font-weight: 700;
+
 }
+
+
+/* TÍTULO DEL MENSAJE */
 
 .dash-modal-info strong {
+
   display: block;
-
   color: var(--dorado-oscuro);
-
   font-family: "Subtitulo", sans-serif;
+
 }
+
+
+/* DESCRIPCIÓN DEL MENSAJE */
 
 .dash-modal-info p {
+
   margin-top: 4px;
-
   color: #7a6b58;
-
   font-size: 13px;
+
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* CONTENEDOR BOTONES */
-/* CONTENEDOR BOTONES */
+/* CONTENEDOR DE BOTONES
+   Agrupa los botones de acción del formulario. */
 
 .dash-modal-buttons {
-    display: flex;
 
-    gap: 12px;
+  display: flex;
+  gap: 12px;
+
 }
 
-/* BOTONES BASE */
+
+/* BOTONES BASE
+   Estilos compartidos para todos los botones del
+   formulario. */
 
 .dash-btn {
-    width: 140px;
 
-    height: 45px;
+  width: 140px;
+  height: 45px;
+  border: none;
+  border-radius: 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  font-family: "Texto", sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0;
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 
-    border: none;
-
-    border-radius: 12px;
-
-    display: inline-flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    gap: 8px;
-
-    cursor: pointer;
-
-    font-family: "Texto", sans-serif;
-
-    font-size: 15px;
-
-    font-weight: 600;
-
-    line-height: 1;
-
-    letter-spacing: 0;
-
-    text-rendering: geometricPrecision;
-
-    -webkit-font-smoothing: antialiased;
-
-    -moz-osx-font-smoothing: grayscale;
-
-    transition:
-        background 0.2s ease,
-        border-color 0.2s ease,
-        transform 0.2s ease,
-        box-shadow 0.2s ease;
 }
 
 .dash-btn:hover {
-    transform: translateY(-1px);
+
+  transform: translateY(-1px);
+
 }
 
 .dash-btn svg {
-    width: 16px;
 
-    height: 16px;
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
 
-    flex-shrink: 0;
 }
 
-/* BOTÓN GUARDAR */
+
+/* BOTÓN PRINCIPAL
+   Botón utilizado para guardar la información. */
 
 .dash-btn-primary {
-    background: var(--vino);
 
-    color: #ffffff;
+  background: var(--vino);
+  color: #ffffff;
+  box-shadow:
+    0 6px 14px rgba(138, 32, 54, 0.20);
 
-    box-shadow:
-        0 6px 14px rgba(138, 32, 54, 0.20);
 }
 
 .dash-btn-primary:hover {
-    background: var(--vino-oscuro);
 
-    box-shadow:
-        0 8px 18px rgba(138, 32, 54, 0.28);
+  background: var(--vino-oscuro);
+  box-shadow:
+    0 8px 18px rgba(138, 32, 54, 0.28);
+
 }
+
 .dash-btn-primary:disabled {
-    background: #d6c7b1;
 
-    color: #8b7d6a;
+  background: #d6c7b1;
+  color: #8b7d6a;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+  opacity: 0.9;
 
-    cursor: not-allowed;
-
-    box-shadow: none;
-
-    transform: none;
-
-    opacity: 0.9;
 }
 
 .dash-btn-primary:disabled:hover {
-    background: #d6c7b1;
 
-    transform: none;
+  background: #d6c7b1;
+  transform: none;
+  box-shadow: none;
 
-    box-shadow: none;
 }
 
-/* BOTÓN CANCELAR */
+
+/* BOTÓN SECUNDARIO
+   Botón utilizado para cancelar acciones. */
 
 .dash-btn-secondary {
-    background: #ffffff;
 
-    color: var(--vino-oscuro);
+  background: #ffffff;
+  color: var(--vino-oscuro);
+  border: 2px solid var(--dorado);
+  box-shadow:
+    0 4px 10px rgba(0, 0, 0, 0.04);
 
-    border: 2px solid var(--dorado);
-
-    box-shadow:
-        0 4px 10px rgba(0, 0, 0, 0.04);
 }
 
 .dash-btn-secondary:hover {
-    background: #fbf8f2;
 
-    border-color: var(--dorado-oscuro);
+  background: #fbf8f2;
+  border-color: var(--dorado-oscuro);
+
 }
 
 
-/* ==========================================
-   STEPPER DEL MODAL
-========================================== */
+/* STEPPER DEL MODAL
+   Barra de navegación que muestra los pasos del
+   formulario. */
 
 .dash-stepper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 14px;
 
-   padding: 14px 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 32px;
+  background: #ffffff;
+  overflow-x: auto;
 
-    background: #ffffff;
-
-    
-
-    overflow-x: auto;
 }
+
+
+/* PASO DEL STEPPER
+   Representa cada sección del formulario. */
 
 .dash-step {
-    min-width: 140px;
 
-    padding: 10px 16px;
+  min-width: 140px;
+  padding: 10px 16px;
+  border-radius: 12px;
+  background: #f8f3eb;
+  border: 1px solid #e3d2b0;
+  color: #8c7b65;
+  font-family: "Texto", sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.25s ease;
 
-    border-radius: 12px;
-
-    background: #f8f3eb;
-
-    border: 1px solid #e3d2b0;
-
-    color: #8c7b65;
-
-    font-family: "Texto", sans-serif;
-
-    font-size: 14px;
-
-    font-weight: 600;
-
-    text-align: center;
-
-    cursor: pointer;
-
-    transition: all 0.25s ease;
 }
+
+
+/* PASO ACTIVO */
 
 .dash-step.active {
-    background: var(--vino);
 
-    color: #ffffff;
+  background: var(--vino);
+  color: #ffffff;
+  border-color: var(--vino);
+  box-shadow: 0 6px 14px rgba(138, 32, 54, 0.18);
 
-    border-color: var(--vino);
-
-    box-shadow: 0 6px 14px rgba(138, 32, 54, 0.18);
 }
+
+
+/* PASO COMPLETADO */
 
 .dash-step.completed {
-    background: #efe3d0;
 
-    color: var(--dorado-oscuro);
+  background: #efe3d0;
+  color: var(--dorado-oscuro);
+  border-color: var(--dorado);
 
-    border-color: var(--dorado);
 }
 
+
+/* PASO DESHABILITADO */
+
 .dash-step:disabled {
-    cursor: default;
+
+  cursor: default;
+
 }

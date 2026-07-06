@@ -1,25 +1,39 @@
 "use client";
 
-/* ==================================================
-   PROPIEDADES DEL COMPONENTE
-================================================== */
+/* COMPONENTE */
 
+/**
+ * Componente encargado de mostrar la paginación
+ * y la información de los registros de la tabla.
+ */
 export default function Pagination({
 
+  /* INFORMACIÓN */
+
+  // Total de registros después de aplicar los filtros.
   filteredData,
 
+  // Registros que se muestran en la página actual.
   currentRecords,
 
+  // Página actualmente seleccionada.
   currentPage,
 
+  // Número total de páginas.
   totalPages,
 
+  // Índice del primer registro mostrado.
   startIndex,
 
+  // Cantidad de registros que se muestran por página.
   registrosPorPagina,
 
+  /* FUNCIONES */
+
+  // Cambia la cantidad de registros por página.
   setRegistrosPorPagina,
 
+  // Cambia la página actual.
   setCurrentPage,
 
 }) {
@@ -28,56 +42,60 @@ export default function Pagination({
 
     <>
 
-      {/* ===========================================
-          PIE DE LA TABLA
-      ============================================ */}
+      {/* PIE DE LA TABLA */}
 
       <div className="dash-table-footer">
 
-        {/* =======================================
-            INFORMACIÓN DE REGISTROS
-        ======================================== */}
+        {/* INFORMACIÓN DE REGISTROS */}
 
         <p className="dash-table-info">
 
-    {filteredData.length === 0 ? (
+          {filteredData.length === 0 ? (
 
-        <>
-            <span className="dash-table-info-number">0 - 0</span>
-            {" de "}
-            <span className="dash-table-info-number">0</span>
-            {" registros"}
-        </>
+            <>
+              <span className="dash-table-info-number">
+                0 - 0
+              </span>
 
-    ) : (
+              {" de "}
+              <span className="dash-table-info-number">
+                0
+              </span>
 
-        <>
-            <span className="dash-table-info-number">
+              {" registros"}
+            </>
+
+          ) : (
+
+            <>
+              <span className="dash-table-info-number">
+
                 {startIndex + 1} - {startIndex + currentRecords.length}
-            </span>
 
-            {" de "}
+              </span>
 
-            <span className="dash-table-info-number">
+              {" de "}
+
+              <span className="dash-table-info-number">
+
                 {filteredData.length}
-            </span>
 
-            {" registros"}
-        </>
+              </span>
 
-    )}
+              {" registros"}
 
-</p>
+            </>
 
-        {/* =======================================
-            PAGINACIÓN
-        ======================================== */}
+          )}
+
+        </p>
+
+
+        {/* CONTROLES DE PAGINACIÓN */}
 
         <div className="dash-pagination">
 
-          {/* ===============================
-              PÁGINA ANTERIOR
-          ================================ */}
+          {/* PÁGINA ANTERIOR */}
 
           <button
             className="dash-page-btn"
@@ -91,9 +109,8 @@ export default function Pagination({
 
           </button>
 
-          {/* ===============================
-              NÚMEROS DE PÁGINA
-          ================================ */}
+
+          {/* NÚMEROS DE PÁGINA */}
 
           {Array.from(
 
@@ -103,6 +120,7 @@ export default function Pagination({
 
           )
 
+            // Muestra únicamente las páginas necesarias.
             .filter(
 
               (page) =>
@@ -123,16 +141,14 @@ export default function Pagination({
 
                 <div key={page}>
 
+                  {/* Muestra puntos suspensivos cuando existen páginas ocultas. */}
                   {index > 0 &&
-
                     page -
                       array[index - 1] >
                       1 && (
 
                       <span className="dash-page-dots">
-
                         ...
-
                       </span>
 
                     )}
@@ -158,9 +174,8 @@ export default function Pagination({
 
             )}
 
-          {/* ===============================
-              PÁGINA SIGUIENTE
-          ================================ */}
+
+          {/* PÁGINA SIGUIENTE */}
 
           <button
             className="dash-page-btn"
@@ -179,26 +194,35 @@ export default function Pagination({
         </div>
 
 
-
-        {/*COMENTAR*/}
+        {/*  CANTIDAD DE REGISTROS POR PÁGINA */}
 
         <div className="dash-pagination-size">
 
-    <label>Mostrar</label>
+          {/* Etiqueta del selector */}
+          <label>
 
-   <select
-    value={registrosPorPagina}
-    onChange={(e) =>
-        setRegistrosPorPagina(Number(e.target.value))
-    }
->
-    <option value={15}>15</option>
-    <option value={25}>25</option>
-    <option value={50}>50</option>
-    <option value={100}>100</option>
-</select>
+            Mostrar
 
-</div>
+          </label>
+
+          {/* Selector de registros por página */}
+          <select
+            value={registrosPorPagina}
+            onChange={(e) =>
+              setRegistrosPorPagina(
+                Number(e.target.value)
+              )
+            }
+          >
+
+            <option value={15}>15</option>
+            <option value={25}>25</option>
+            <option value={50}>50</option>
+            <option value={100}>100</option>
+
+          </select>
+
+        </div>
 
       </div>
 

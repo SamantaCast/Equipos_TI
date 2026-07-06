@@ -1,122 +1,117 @@
-/* ==================================================
-   EXPORTAR REPORTE PDF
-================================================== */
+/* EXPORTAR REPORTE A PDF
+   Genera el reporte del inventario de equipos en
+   formato PDF. */
 
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 
-/* ==================================================
-   CONVERTIR IMAGEN A BASE64
-================================================== */
+
+/* CONVERTIR IMAGEN A BASE64
+   Convierte una imagen ubicada en la carpeta pública
+   al formato Base64 para insertarla en el PDF. */
 
 async function cargarImagen(
-    url: string
+  url: string
 ): Promise<string> {
 
-    return new Promise((resolve, reject) => {
+  return new Promise((resolve, reject) => {
 
-        const img = new Image();
+    const img = new Image();
 
-        img.crossOrigin = "anonymous";
+    img.crossOrigin = "anonymous";
+    img.src = url;
+    img.onload = () => {
 
-        img.src = url;
+      const canvas =
+        document.createElement("canvas");
 
-        img.onload = () => {
+      canvas.width = img.width;
+      canvas.height = img.height;
 
-            const canvas =
-                document.createElement("canvas");
+      const ctx =
+        canvas.getContext("2d");
 
-            canvas.width = img.width;
+      if (!ctx) {
 
-            canvas.height = img.height;
+        reject(
+          "No fue posible crear el Canvas."
+        );
 
-            const ctx =
-                canvas.getContext("2d");
+        return;
 
-            if (!ctx) {
+      }
 
-                reject(
-                    "No fue posible crear el Canvas."
-                );
+      ctx.drawImage(img, 0, 0);
 
-                return;
+      resolve(
+        canvas.toDataURL("image/png")
+      );
 
-            }
+    };
 
-            ctx.drawImage(img, 0, 0);
+    img.onerror = () => {
 
-            resolve(
-                canvas.toDataURL("image/png")
-            );
+      reject(
+        `No fue posible cargar ${url}`
+      );
 
-        };
+    };
 
-        img.onerror = () => {
-
-            reject(
-                `No fue posible cargar ${url}`
-            );
-
-        };
-
-    });
+  });
 
 }
 
-/* ==================================================
-   EXPORTAR PDF
-================================================== */
+
+/* EXPORTAR PDF
+   Crea el documento PDF e inserta la información
+   del inventario de equipos. */
 
 export async function exportarPDF(
-    registros: any[]
+  registros: any[]
 ) {
 
-    /* ==========================================
-       CREAR DOCUMENTO
-    ========================================== */
+  /* CREAR DOCUMENTO PDF */
 
- const doc = new jsPDF({
+  const doc = new jsPDF({
+
     orientation: "landscape",
     unit: "mm",
-    format: [297, 650]
-});
+    format: [297, 650],
 
-    /* ==========================================
-       CARGAR LOGOS
-    ========================================== */
-
-    const logo1 =
-        await cargarImagen("/logos/1.png");
-
-    const logo2 =
-        await cargarImagen("/logos/2.png");
-
-    const logo3 =
-        await cargarImagen("/logos/3.png");
-
-    /* ==========================================
-       FECHA ACTUAL
-    ========================================== */
-
-    const fecha = new Date();
-
-//cometar
-const pageWidth = doc.internal.pageSize.getWidth();
+  });
 
 
+  /* CARGAR LOGOTIPOS */
+
+  const logo1 =
+    await cargarImagen("/logos/1.png");
+
+  const logo2 =
+    await cargarImagen("/logos/2.png");
+
+  const logo3 =
+    await cargarImagen("/logos/3.png");
 
 
+  /* FECHA ACTUAL */
+
+  const fecha = new Date();
 
 
+  /* ANCHO DE LA PÁGINA
+     Se utiliza para centrar elementos y calcular
+     posiciones dinámicamente. */
+
+  const pageWidth =
+    doc.internal.pageSize.getWidth();
 
 
+  /* COLUMNAS DEL REPORTE
+     Define el orden de las columnas que aparecerán
+     en la tabla del PDF. */
 
+  const columnas = [
 
-
-    /* ==========================================
-       comentar
-    ========================================== */
-const columnas = [
     "USUARIO",
     "N° NOMINA",
     "PERFIL",
@@ -141,361 +136,425 @@ const columnas = [
     "PROCESADOR",
     "CONECTIVIDAD",
     "NOMBRE DEL EQUIPO",
-    "MOVILIDAD"
-];
-/* ==========================================
-   TABLA
-========================================== */
-//COEMTAR
-function formatearTexto(valor: any) {
+    "MOVILIDAD",
+
+  ];
+
+
+  /* FORMATEAR TEXTO
+     Inserta saltos de línea para mejorar la
+     presentación de textos largos. */
+
+  function formatearTexto(valor: any) {
 
     if (!valor) return "";
 
     return String(valor)
 
-        .replace(/\s*\(/g, "\n(")          // antes del (
-        .replace(/\)\s*/g, ")\n")          // después del )
-        .replace(/\s+CON\s+/gi, "\nCON ")
-        .replace(/\s+DE\s+/gi, "\nDE ")
-        .replace(/\s+PARA\s+/gi, "\nPARA ")
-        .replace(/\s+Y\s+/gi, "\nY ");
+      .replace(/\s*\(/g, "\n(")
+      .replace(/\)\s*/g, ")\n")
+      .replace(/\s+CON\s+/gi, "\nCON ")
+      .replace(/\s+DE\s+/gi, "\nDE ")
+      .replace(/\s+PARA\s+/gi, "\nPARA ")
+      .replace(/\s+Y\s+/gi, "\nY ");
 
-}
+  }
 
 
-//COMENTAR//
-autoTable(doc, {
+  /* CREAR TABLA
+     Genera la tabla principal del reporte. */
+
+  autoTable(doc, {
 
     startY: 56,
-
     theme: "grid",
+    margin: {
 
-margin: {
-    top: 12,
-    left: 5,
-    right: 5,
-    bottom: 20
-},
+      top: 12,
+      left: 5,
+      right: 5,
+      bottom: 20,
 
-    /* ======================================
-       ENCABEZADOS DINÁMICOS
-    ====================================== */
+    },
+
+    /* ENCABEZADOS */
 
     head: [
-        columnas
+
+      columnas,
+
     ],
 
-    /* ======================================
-       DATOS DINÁMICOS
-    ====================================== */
+    /* REGISTROS */
 
-body: registros.map((registro) =>
+    body: registros.map((registro) =>
 
-    columnas.map((columna) => {
+      columnas.map((columna) => {
 
         if (
-            columna === "DESCRIPCIÓN DEL EQUIPO" ||
-            columna === "SISTEMA OPERATIVO" ||
-            columna === "NOMBRE DEL EQUIPO"
+
+          columna === "DESCRIPCIÓN DEL EQUIPO" ||
+          columna === "SISTEMA OPERATIVO" ||
+          columna === "NOMBRE DEL EQUIPO"
+
         ) {
 
-            return formatearTexto(registro[columna]);
+          return formatearTexto(
+            registro[columna]
+          );
 
         }
 
         return registro[columna] ?? "";
 
-    })
+      })
 
-),
-styles: {
-    fontSize: 6,
-    cellPadding: 1,
-    overflow: "linebreak",
-    valign: "middle"
-},
-columnStyles: {
-    3: {
-        cellWidth: 45
-    }
-},
-headStyles: {
+    ),
 
-    minCellHeight: 9,
+    /* ESTILO GENERAL */
 
-    fontSize: 6,
+    styles: {
 
-    halign: "center",
-
-    valign: "middle",
-
-    fillColor: [138,32,54],
-
-    textColor: [255,255,255],
-
-    fontStyle: "bold"
-
-},
-tableWidth: "auto",
-
-horizontalPageBreak: false,
-horizontalPageBreakRepeat: 0,
-    alternateRowStyles: {
-
-        fillColor: [248, 248, 248]
+      fontSize: 6,
+      cellPadding: 1,
+      overflow: "linebreak",
+      valign: "middle",
 
     },
 
-    /* ==========================================
-       ENCABEZADO
-       (Sólo en la primera página)
-    ========================================== */
+    /* CONFIGURACIÓN DE COLUMNAS */
+
+    columnStyles: {
+
+      3: {
+
+        cellWidth: 45,
+
+      },
+
+    },
+
+    /* ESTILO DEL ENCABEZADO */
+
+    headStyles: {
+
+      minCellHeight: 9,
+      fontSize: 6,
+      halign: "center",
+      valign: "middle",
+      fillColor: [138, 32, 54],
+      textColor: [255, 255, 255],
+      fontStyle: "bold",
+
+    },
+
+    tableWidth: "auto",
+    horizontalPageBreak: false,
+    horizontalPageBreakRepeat: 0,
+
+    /* FILAS ALTERNADAS */
+
+    alternateRowStyles: {
+
+      fillColor: [248, 248, 248],
+
+    },
+
+    /* ENCABEZADO DEL DOCUMENTO
+       Se dibuja únicamente en la primera página. */
 
     willDrawPage: (data) => {
 
-        if (data.pageNumber !== 1) return;
+      if (data.pageNumber !== 1) return;
 
-        /* ======================================
-           LOGOS
-        ====================================== */
+      /* LOGOTIPOS */
 
-        doc.addImage(
-    logo1,
-    "PNG",
-    10,
-    10,
-    58,
-    13
-);
+      doc.addImage(
+        logo1,
+        "PNG",
+        10,
+        10,
+        58,
+        13
+      );
 
-doc.addImage(
-    logo2,
-    "PNG",
-    72,
-    10,
-    52,
-    13
-);
+      doc.addImage(
+        logo2,
+        "PNG",
+        72,
+        10,
+        52,
+        13
+      );
 
-doc.addImage(
-    logo3,
-    "PNG",
-    128,
-    9,
-    34,
-    13
-);
+      doc.addImage(
+        logo3,
+        "PNG",
+        128,
+        9,
+        34,
+        13
+      );
 
-        doc.setFont(
-            "helvetica",
-            "bold"
-        );
+      doc.setFont(
+        "helvetica",
+        "bold"
+      );
 
-        doc.setFontSize(18);
+      doc.setFontSize(18);
+      doc.setTextColor(170);
+      doc.text("|", 55, 18);
 
-        doc.setTextColor(170);
+      /* TÍTULO */
 
-        doc.text("|", 55, 18);
+      doc.setFont(
+        "helvetica",
+        "bold"
+      );
 
-        /* ======================================
-           TÍTULO
-        ====================================== */
+      doc.setFontSize(30);
 
-        doc.setFont(
-            "helvetica",
-            "bold"
-        );
+      doc.setFont(
+        "helvetica",
+        "bold"
+      );
 
-        doc.setFontSize(30);
-        doc.setFont("helvetica", "bold");
-doc.setTextColor(138,32,54);
+      doc.setTextColor(
+        138,
+        32,
+        54
+      );
 
-        doc.setTextColor(
-            138,
-            32,
-            54
-        );
+      doc.text(
+        "GESTIÓN DE EQUIPOS",
+        pageWidth / 2,
+        35,
+        {
 
-        doc.text(
-    "GESTIÓN DE EQUIPOS",
-    pageWidth / 2,
-    35,
-    {
-        align: "center"
-    }
-);
+          align: "center",
 
-        /* ======================================
-           SUBTÍTULO
-        ====================================== */
+        }
 
-        doc.setFont(
-            "helvetica",
-            "normal"
-        );
+      );
 
-        doc.setFontSize(11);
+      /* SUBTÍTULO */
 
-        doc.setTextColor(90);
+      doc.setFont(
+        "helvetica",
+        "normal"
+      );
 
-        doc.setFontSize(16);
+      doc.setFontSize(11);
+      doc.setTextColor(90);
+      doc.setFontSize(16);
+      doc.text(
+        "Inventario de Activos Informáticos",
+        pageWidth / 2,
+        47,
+        {
 
-doc.text(
-    "Inventario de Activos Informáticos",
-    pageWidth / 2,
-    47,
-    {
-        align: "center"
-    }
-);
+          align: "center",
 
-        /* ======================================
-           FECHA / HORA / TOTAL
-        ====================================== */
+        }
 
-        doc.setFont(
-            "helvetica",
-            "bold"
-        );
+      );
 
-        doc.setFontSize(10);
+      /* FECHA, HORA Y TOTAL */
 
-        doc.setTextColor(
-            138,
-            32,
-            54
-        );
-/* ======================================
-   FECHA - HORA - TOTAL
-====================================== */
+      doc.setFont(
+        "helvetica",
+        "bold"
+      );
 
-const yInfo = 53;
+      doc.setFontSize(10);
+      doc.setTextColor(
+        138,
+        32,
+        54
+      );
 
-// Posiciones alineadas con el borde derecho de la tabla
-const xTotalValor = pageWidth - 8;
-const xTotalTexto = xTotalValor - 28;
+      const yInfo = 53;
 
-const xHoraValor = xTotalTexto - 55;
-const xHoraTexto = xHoraValor - 18;
+      /* Posiciones */
 
-const xFechaValor = xHoraTexto - 55;
-const xFechaTexto = xFechaValor - 20;
+      const xTotalValor =
+        pageWidth - 8;
 
-// FECHA
-doc.setTextColor(138, 32, 54);
-doc.text("FECHA:", xFechaTexto, yInfo);
+      const xTotalTexto =
+        xTotalValor - 28;
 
-doc.setTextColor(80, 80, 80);
-doc.text(
-    fecha.toLocaleDateString("es-MX"),
-    xFechaValor,
-    yInfo
-);
+      const xHoraValor =
+        xTotalTexto - 55;
 
-// HORA
-doc.setTextColor(138, 32, 54);
-doc.text("HORA:", xHoraTexto, yInfo);
+      const xHoraTexto =
+        xHoraValor - 18;
 
-doc.setTextColor(80, 80, 80);
-doc.text(
-    fecha.toLocaleTimeString("es-MX"),
-    xHoraValor,
-    yInfo
-);
+      const xFechaValor =
+        xHoraTexto - 55;
 
-// TOTAL
-doc.setTextColor(138, 32, 54);
-doc.text(
-    "TOTAL:",
-    xTotalTexto,
-    yInfo
-);
+      const xFechaTexto =
+        xFechaValor - 20;
 
-doc.setTextColor(80, 80, 80);
-doc.text(
-    `${registros.length}`,
-    xTotalValor,
-    yInfo,
-    {
-        align: "right"
-    }
-);
-doc.line(
-    10,
-    196,
-    pageWidth - 10,
-    196
-);
+      /* Fecha */
+
+      doc.setTextColor(138, 32, 54);
+
+      doc.text(
+        "FECHA:",
+        xFechaTexto,
+        yInfo
+      );
+
+      doc.setTextColor(80, 80, 80);
+
+      doc.text(
+        fecha.toLocaleDateString("es-MX"),
+        xFechaValor,
+        yInfo
+      );
+
+      /* Hora */
+
+      doc.setTextColor(138, 32, 54);
+
+      doc.text(
+        "HORA:",
+        xHoraTexto,
+        yInfo
+      );
+
+      doc.setTextColor(80, 80, 80);
+
+      doc.text(
+        fecha.toLocaleTimeString("es-MX"),
+        xHoraValor,
+        yInfo
+      );
+
+      /* Total */
+
+      doc.setTextColor(138, 32, 54);
+
+      doc.text(
+        "TOTAL:",
+        xTotalTexto,
+        yInfo
+      );
+
+      doc.setTextColor(80, 80, 80);
+      doc.text(
+
+        `${registros.length}`,
+        xTotalValor,
+        yInfo,
+
+        {
+
+          align: "right",
+
+        }
+
+      );
+
+      /* Línea divisoria */
+
+      doc.line(
+        10,
+        196,
+        pageWidth - 10,
+        196
+
+      );
 
     },
 
-});
+  });
 
 
+  /* AGREGAR PIE DE PÁGINA
+     Inserta un pie de página en todas las hojas del
+     documento con información del sistema y la
+     numeración de páginas. */
 
+  const paginas = doc.getNumberOfPages();
 
-/* ==========================================
-   AGREGAR PIE DE PÁGINA
-========================================== */
+  for (let pagina = 1; pagina <= paginas; pagina++) {
 
-const paginas = doc.getNumberOfPages();
-
-for (let pagina = 1; pagina <= paginas; pagina++) {
+    /* Seleccionar página */
 
     doc.setPage(pagina);
 
-    doc.setDrawColor(220);
-    doc.setLineWidth(.3);
+    /* Configurar línea divisoria */
 
-    doc.setFont("helvetica","normal");
+    doc.setDrawColor(220);
+    doc.setLineWidth(0.3);
+
+    /* Configurar fuente */
+
+    doc.setFont(
+      "helvetica",
+      "normal"
+    );
+
     doc.setFontSize(9);
     doc.setTextColor(90);
 
-    const pageHeight = doc.internal.pageSize.getHeight();
+    /* Altura de la página */
 
-doc.line(
-    10,
-    pageHeight - 12,
-    pageWidth - 10,
-    pageHeight - 12
-);
+    const pageHeight =
+      doc.internal.pageSize.getHeight();
 
-doc.text(
-    "Documento generado automáticamente por el Sistema Gestión de Equipos | Departamento de Informática",
-    10,
-    pageHeight - 6
-);
+    /* Dibujar línea */
 
-doc.text(
-    `Página ${pagina} de ${paginas}`,
-    pageWidth - 10,
-    pageHeight - 6,
-    {
-        align: "right"
-    }
-);
+    doc.line(
+      10,
+      pageHeight - 12,
+      pageWidth - 10,
+      pageHeight - 12
 
-}
-    /* ==========================================
-       GUARDAR PDF
-    ========================================== */
+    );
 
-/* ==========================================
-   GUARDAR PDF
-========================================== */
+    /* Texto informativo */
 
-/* ==========================================
-   GUARDAR PDF
-========================================== */
+    doc.text(
+      "Documento generado automáticamente por el Sistema Gestión de Equipos | Departamento de Informática",
+      10,
+      pageHeight - 6
+    );
 
-const nombreArchivo =
+    /* Número de página */
+
+    doc.text(
+      `Página ${pagina} de ${paginas}`,
+      pageWidth - 10,
+      pageHeight - 6,
+      {
+
+        align: "right",
+
+      }
+
+    );
+
+  }
+
+
+  /* GUARDAR PDF
+     Genera el nombre del archivo utilizando la fecha
+     actual e inicia la descarga del documento. */
+
+  const nombreArchivo =
 
     `Gestion_Equipos_${fecha
-        .toLocaleDateString("es-MX")
-        .replace(/\//g, "-")}.pdf`;
+      .toLocaleDateString("es-MX")
+      .replace(/\//g, "-")}.pdf`;
 
-doc.save(
+  /* Descargar archivo */
+
+  doc.save(
+
     nombreArchivo
-);
+
+  );
 
 }

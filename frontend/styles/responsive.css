@@ -1,190 +1,315 @@
-/* TABLET GRANDE */
+/* TABLET GRANDE
+   Ajustes para pantallas de hasta 1100 px. */
 
 @media (max-width: 1100px) {
 
   .dash-form-grid {
+
     grid-template-columns: 1fr;
+
   }
 
 }
 
-/* TABLET */
+
+/* TABLET
+   Ajustes para pantallas de hasta 900 px. */
 
 @media (max-width: 900px) {
 
+  /* LOGOTIPOS */
+
   .logos {
+
     gap: 22px;
+
   }
 
   .logos img {
+
     height: 46px;
+
   }
 
+
+  /* TARJETA DE LOGIN */
+
   .login-card {
+
     padding: 24px 26px 20px;
+
   }
 
 }
 
 
-
-/* MOVIL */
+/* DISPOSITIVOS MÓVILES
+   Ajustes para pantallas de hasta 768 px. */
 
 @media (max-width: 768px) {
 
-  /* LOGIN */
+  /* BARRA DE NAVEGACIÓN */
 
   .navbar {
+
     padding: 8px 16px;
+
   }
+
+
+  /* PÁGINA DE LOGIN */
 
   .login-page {
+
     padding: 18px 12px 16px;
     min-height: calc(100vh - 76px);
+
   }
+
+
+  /* TARJETA DE LOGIN */
 
   .login-card {
+
     padding: 22px 18px 18px;
     border-radius: 28px;
+
   }
 
+
+  /* ICONO DEL USUARIO */
+
   .user-circle {
+
     width: 112px;
     height: 112px;
     margin-bottom: 20px;
+
   }
 
   .user-circle span {
+
     font-size: 50px;
+
   }
 
+
+  /* CAMPOS DEL FORMULARIO */
+
   .input-group {
+
     height: 56px;
     border-radius: 30px;
+
   }
 
   .input-group input {
+
     font-size: 15px;
+
   }
 
+
+  /* BOTÓN DE LOGIN */
+
   .btn-login {
+
     height: 60px;
     font-size: 17px;
     border-radius: 30px;
     margin-top: 14px;
+
   }
 
+
+  /* OPCIONES DEL LOGIN */
+
   .login-options {
+
     font-size: 14px;
     flex-direction: column;
     gap: 10px;
     align-items: flex-start;
     margin-top: 16px;
+
   }
 
-  /* DASHBOARD */
+
+  /* LOGOTIPOS DEL DASHBOARD */
 
   .dash-logos {
+
     gap: 14px;
+
   }
 
   .dash-logos img {
+
     height: 40px;
+
   }
+
+
+  /* ENCABEZADO DEL DASHBOARD */
 
   .dash-topbar h1 {
+
     font-size: 24px;
+
   }
+
+
+  /* PANEL PRINCIPAL */
 
   .dash-panel {
+
     padding: 18px;
     border-radius: 22px;
+
   }
 
+
+  /* MODAL */
+
   .dash-modal {
+
     padding: 18px;
     border-radius: 22px;
+
   }
 
   .dash-modal-head h2 {
+
     font-size: 22px;
+
   }
 
 }
 
-/* MOVIL PEQUEÑO */
+
+/* MÓVILES PEQUEÑOS
+   Ajustes para pantallas de hasta 480 px. */
 
 @media (max-width: 480px) {
 
-  /* LOGIN */
+  /* LOGOTIPOS */
 
   .logos {
+
     gap: 12px;
+
   }
 
   .logos img {
+
     height: 38px;
+
   }
+
+
+  /* TARJETA DE LOGIN */
 
   .login-card {
+
     border-radius: 22px;
+
   }
 
+
+  /* ICONO DEL USUARIO */
+
   .user-circle {
+
     width: 100px;
     height: 100px;
+
   }
 
   .user-circle span {
+
     font-size: 44px;
+
   }
+
+
+  /*  CAMPOS DEL FORMULARIO */
 
   .input-group {
+
     height: 52px;
     padding: 0 16px;
+
   }
 
+
+  /* BOTÓN DE LOGIN */
+
   .btn-login {
+
     height: 56px;
     font-size: 16px;
     letter-spacing: 1px;
+
   }
 
 }
 
 
-/* ==================================================
-   RESPONSIVE
-================================================== */
+/* RESPONSIVE DEL DASHBOARD
+   Ajustes generales para el panel principal. */
 
 @media (max-width: 992px) {
+
+  /* BUSCADOR */
+
   .dash-search {
+
     min-width: 100%;
+
   }
+
 }
 
+
 @media (max-width: 768px) {
+
+  /* PANEL PRINCIPAL */
+
   .dash-panel {
+
     padding: 22px;
+
   }
+
+
+  /* TÍTULO DEL DASHBOARD */
 
   .dash-topbar h1 {
+
     font-size: 38px;
+
   }
+
+
+  /* BOTÓN NUEVO REGISTRO */
 
   .dash-btn-new {
+
     width: 100%;
-
     justify-content: center;
-
     align-self: stretch;
+
   }
+
+
+  /* TARJETAS DE FILTRO */
 
   .dash-filter-card {
+
     flex: 1;
-
     min-width: 180px;
-
     width: 100%;
+
   }
+
 }

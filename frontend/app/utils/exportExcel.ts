@@ -1,63 +1,56 @@
-/* ==================================================
-   EXPORTAR REPORTE EXCEL
-   Control Equipos de Cómputo
-================================================== */
+/* EXPORTAR REPORTE A EXCEL
+   Genera el archivo de Excel con la información
+   del inventario de equipos de cómputo. */
 
 import ExcelJS from "exceljs";
 import { saveAs } from "file-saver";
 
 
-/* ==================================================
-   CARGAR IMAGEN
-================================================== */
+/* CARGAR IMAGEN
+   Obtiene una imagen desde la carpeta pública para
+   incorporarla al reporte de Excel. */
 
-async function cargarImagen(url: string): Promise<ArrayBuffer> {
+async function cargarImagen(
+  url: string
+): Promise<ArrayBuffer> {
 
-    const respuesta = await fetch(url);
+  const respuesta = await fetch(url);
 
-    return await respuesta.arrayBuffer();
+  return await respuesta.arrayBuffer();
 
 }
 
-/* ==================================================
-   EXPORTAR EXCEL
-================================================== */
+
+/* EXPORTAR EXCEL
+   Crea el libro de Excel y configura la estructura
+   principal del reporte. */
 
 export async function exportarExcel(
-    impresoras: any[]
+  impresoras: any[]
 ) {
 
-    /* ==========================================
-       FECHA
-    ========================================== */
+  /* FECHA ACTUAL */
 
-    const fecha = new Date();
+  const fecha = new Date();
 
-    /* ==========================================
-       LIBRO
-    ========================================== */
 
-    const libro = new ExcelJS.Workbook();
+  /* CREAR LIBRO */
 
-    libro.creator = "Departamento de Informática";
+  const libro = new ExcelJS.Workbook();
 
-    libro.company = "LECHE PARA EL BIENESTAR S.A de C.V";
+  libro.creator = "Departamento de Informática";
+  libro.company = "LECHE PARA EL BIENESTAR S.A de C.V";
+  libro.subject = "Gestión de Equipos";
+  libro.title = "Gestión de Equipos";
+  libro.created = fecha;
 
-    libro.subject = "Gestión de Equipos";
-libro.title = "Gestión de Equipos";
 
-    libro.created = fecha;
+  /* CREAR HOJA */
 
-    /* ==========================================
-       HOJA
-    ========================================== */
+  const hoja = libro.addWorksheet("GENERAL");
 
-    const hoja = libro.addWorksheet("GENERAL");
 
-    
-        /* ==========================================
-       ENCABEZADOS DE LA TABLA
-    ========================================== */
+  /* ENCABEZADOS DE LA TABLA */
 
   const encabezados = [
 
@@ -85,471 +78,561 @@ libro.title = "Gestión de Equipos";
     "PROCESADOR",
     "CONECTIVIDAD",
     "NOMBRE DEL EQUIPO",
-    "MOVILIDAD"
+    "MOVILIDAD",
 
-];
+  ];
 
-/* ==========================================
-   ÚLTIMA COLUMNA
-========================================== */
 
-const ultimaColumna = hoja.getColumn(encabezados.length).letter;
+  /* ÚLTIMA COLUMNA
+     Obtiene la última columna para combinar celdas
+     dinámicamente. */
 
-    /* ==========================================
-       CONFIGURAR PÁGINA
-    ========================================== */
+  const ultimaColumna =
+    hoja.getColumn(encabezados.length).letter;
 
-    hoja.pageSetup = {
 
-        paperSize: 9,
+  /* CONFIGURAR PÁGINA */
 
-        orientation: "landscape",
+  hoja.pageSetup = {
 
-        fitToPage: true,
+    paperSize: 9,
+    orientation: "landscape",
+    fitToPage: true,
+    fitToWidth: 1,
+    fitToHeight: 0,
+    margins: {
+      left: 0.25,
+      right: 0.25,
+      top: 0.35,
+      bottom: 0.35,
+      header: 0.15,
+      footer: 0.15,
+    },
 
-        fitToWidth: 1,
+  };
 
-        fitToHeight: 0,
 
-        margins: {
+  /* CARGAR LOGOTIPOS */
 
-            left: 0.25,
+  const logo1 =
+    await cargarImagen("/logos/1.png");
 
-            right: 0.25,
+  const logo2 =
+    await cargarImagen("/logos/2.png");
 
-            top: 0.35,
+  const logo3 =
+    await cargarImagen("/logos/3.png");
 
-            bottom: 0.35,
 
-            header: 0.15,
+  /* REGISTRAR LOGOTIPOS */
 
-            footer: 0.15
+  const idLogo1 = libro.addImage({
 
-        }
+    buffer: logo1,
+    extension: "png",
 
-    };
+  });
 
-    /* ==========================================
-       CARGAR LOGOS
-    ========================================== */
+  const idLogo2 = libro.addImage({
 
-    const logo1 = await cargarImagen("/logos/1.png");
+    buffer: logo2,
+    extension: "png",
 
-    const logo2 = await cargarImagen("/logos/2.png");
+  });
 
-    const logo3 = await cargarImagen("/logos/3.png");
+  const idLogo3 = libro.addImage({
 
-    /* ==========================================
-       AGREGAR LOGOS
-    ========================================== */
+    buffer: logo3,
+    extension: "png",
 
-    const idLogo1 = libro.addImage({
+  });
 
-        buffer: logo1,
 
-        extension: "png"
+  /* INSERTAR LOGOTIPOS */
 
-    });
+  hoja.addImage(
 
-    const idLogo2 = libro.addImage({
+    idLogo1,
 
-        buffer: logo2,
+    {
 
-        extension: "png"
+      tl: {
 
-    });
+        col: 0.10,
+        row: 0.10,
 
-    const idLogo3 = libro.addImage({
+      },
 
-        buffer: logo3,
+      ext: {
 
-        extension: "png"
+        width: 205,
+        height: 60,
 
-    });
-       /* ==========================================
-   INSERTAR LOGOS
-========================================== */
-hoja.addImage(idLogo1,{
-    tl:{col:0.10,row:0.10},
-    ext:{
-        width:205,
-        height:60
+      },
+
     }
-});
 
-hoja.addImage(idLogo2,{
-    tl:{col:1.10,row:0.10},
-    ext:{
-        width:180,
-        height:60
+  );
+
+  hoja.addImage(
+
+    idLogo2,
+
+    {
+
+      tl: {
+
+        col: 1.10,
+        row: 0.10,
+
+      },
+
+      ext: {
+
+        width: 180,
+        height: 60,
+
+      },
+
     }
-});
 
-hoja.addImage(idLogo3,{
-    tl:{col:3.15,row:0.05},
-    ext:{
-        width:95,
-        height:60
+  );
+
+  hoja.addImage(
+
+    idLogo3,
+
+    {
+
+      tl: {
+
+        col: 3.15,
+        row: 0.05,
+
+      },
+
+      ext: {
+
+        width: 95,
+        height: 60,
+
+      },
+
     }
-});
 
-    /* ==========================================
-       COMBINAR CELDAS
-    ========================================== */
+  );
 
-hoja.mergeCells(`A5:${ultimaColumna}5`);
-hoja.mergeCells(`A6:${ultimaColumna}6`);
-    
 
-    /* ==========================================
-       TÍTULO
-    ========================================== */
-    hoja.getRow(5).height = 28;
-hoja.getRow(6).height = 22;
+  /* COMBINAR CELDAS
+     Se reservan para el título y el subtítulo. */
 
-    hoja.getCell("A5").value =
-        "GESTIÓN DE EQUIPOS";
+  hoja.mergeCells(`A5:${ultimaColumna}5`);
 
-    hoja.getCell("A5").font = {
+  hoja.mergeCells(`A6:${ultimaColumna}6`);
 
-        bold: true,
 
-        size: 20,
+  /* CONFIGURAR ALTURA DE FILAS */
 
-        color: {
+  hoja.getRow(5).height = 28;
+  hoja.getRow(6).height = 22;
 
-            argb: "8A2036"
 
-        }
+  /* TÍTULO PRINCIPAL */
 
-    };
+  hoja.getCell("A5").value =
+    "GESTIÓN DE EQUIPOS";
 
-    hoja.getCell("A5").alignment = {
+  hoja.getCell("A5").font = {
 
-        horizontal: "center",
+    bold: true,
+    size: 20,
+    color: {
 
-        vertical: "middle"
+      argb: "8A2036",
 
-    };
+    },
 
-    /* ==========================================
-       SUBTÍTULO
-    ========================================== */
-/* ==========================================
-   SUBTÍTULO
-========================================== */
+  };
 
-hoja.getCell("A6").value =
-"Inventario de Activos Informáticos";
+  hoja.getCell("A5").alignment = {
 
-hoja.getCell("A6").font = {
-    size:12,
-    color:{
-        argb:"666666"
-    }
-};
+    horizontal: "center",
+    vertical: "middle",
 
-hoja.getCell("A6").alignment={
-    horizontal:"center",
-    vertical:"middle"
-};
+  };
 
-    /* ==========================================
-       TOTAL
-    ========================================== */
-/* ==========================================
-   TOTAL
-========================================== */
-/* ==========================================
-   TOTAL
-========================================== */
 
-hoja.getCell("A8").value = "TOTAL:";
-hoja.getCell("B8").value = impresoras.length;
+  /* SUBTÍTULO */
 
-hoja.getCell("A8").font = {
+  hoja.getCell("A6").value =
+    "Inventario de Activos Informáticos";
+
+  hoja.getCell("A6").font = {
+
+    size: 12,
+    color: {
+
+      argb: "666666",
+
+    },
+
+  };
+
+  hoja.getCell("A6").alignment = {
+
+    horizontal: "center",
+    vertical: "middle",
+
+  };
+
+
+  /* TOTAL DE REGISTROS
+     Muestra la cantidad total de equipos incluidos
+     en el reporte. */
+
+  hoja.getCell("A8").value = "TOTAL:";
+  hoja.getCell("B8").value = impresoras.length;
+
+  /* Etiqueta */
+
+  hoja.getCell("A8").font = {
+
     bold: true,
     size: 11,
     color: {
-        argb: "8A2036"
-    }
-};
 
-hoja.getCell("B8").font = {
+      argb: "8A2036",
+
+    },
+
+  };
+
+  /* Valor */
+
+  hoja.getCell("B8").font = {
+
     bold: true,
     size: 11,
     color: {
-        argb: "666666"
-    }
-};
+
+      argb: "666666",
+
+    },
+
+  };
 
 
+  /* ENCABEZADO DE LA TABLA
+     Configura el estilo de las columnas del reporte. */
+
+  const filaEncabezado = hoja.getRow(10);
+
+  encabezados.forEach((titulo, index) => {
+
+    /* Obtener celda */
+
+    const celda =
+      filaEncabezado.getCell(index + 1);
+
+    /* Asignar título */
+
+    celda.value = titulo;
+
+    /* Fuente */
+
+    celda.font = {
+
+      bold: true,
+      color: {
+
+        argb: "FFFFFF",
+
+      },
+
+    };
+
+    /* Fondo */
+
+    celda.fill = {
+
+      type: "pattern",
+      pattern: "solid",
+      fgColor: {
+
+        argb: "8A2036",
+
+      },
+
+    };
+
+    /* Alineación */
+
+    celda.alignment = {
+
+      horizontal: "center",
+      vertical: "middle",
+
+    };
+
+    /* Bordes */
+
+    celda.border = {
+
+      top: {
+
+        style: "thin",
+
+      },
+
+      bottom: {
+
+        style: "thin",
+
+      },
+
+      left: {
+
+        style: "thin",
+
+      },
+
+      right: {
+
+        style: "thin",
+
+      },
+
+    };
+
+  });
+
+  /* Altura del encabezado */
+
+  filaEncabezado.height = 24;
 
 
+  /* AGREGAR REGISTROS
+     Inserta cada equipo en la hoja de cálculo y
+     aplica el formato correspondiente. */
 
-//COMENTAR
+  impresoras.forEach((imp, indice) => {
 
-   const filaEncabezado = hoja.getRow(10);
+    /* Agregar fila */
 
-    encabezados.forEach((titulo, index) => {
+    const fila = hoja.addRow(
 
-        const celda = filaEncabezado.getCell(index + 1);
+      encabezados.map(
+        (campo) => imp[campo] ?? ""
+      )
 
-        celda.value = titulo;
+    );
 
-        celda.font = {
+    /* Altura de la fila */
 
-            bold: true,
+    fila.height = 21;
 
-            color: {
+    /* Aplicar formato a cada celda */
 
-                argb: "FFFFFF"
+    fila.eachCell((celda) => {
 
-            }
+      /* Alineación */
 
-        };
+      celda.alignment = {
+
+        vertical: "middle",
+
+      };
+
+      /* Bordes */
+
+      celda.border = {
+
+        top: {
+
+          style: "thin",
+          color: {
+
+            argb: "D9D9D9",
+
+          },
+
+        },
+
+        bottom: {
+
+          style: "thin",
+          color: {
+
+            argb: "D9D9D9",
+
+          },
+
+        },
+
+        left: {
+
+          style: "thin",
+          color: {
+
+            argb: "D9D9D9",
+
+          },
+
+        },
+
+        right: {
+
+          style: "thin",
+          color: {
+
+            argb: "D9D9D9",
+
+          },
+
+        },
+
+      };
+
+    });
+
+    /* FILAS ALTERNADAS
+       Aplica un color de fondo para facilitar
+       la lectura del reporte. */
+
+    if (indice % 2 === 0) {
+
+      fila.eachCell((celda) => {
 
         celda.fill = {
+          type: "pattern",
+          pattern: "solid",
+          fgColor: {
 
-            type: "pattern",
+            argb: "F7F7F7",
 
-            pattern: "solid",
-
-            fgColor: {
-
-                argb: "8A2036"
-
-            }
+          },
 
         };
 
-        celda.alignment = {
+      });
 
-            horizontal: "center",
-
-            vertical: "middle"
-
-        };
-
-        celda.border = {
-
-            top: {
-
-                style: "thin"
-
-            },
-
-            bottom: {
-
-                style: "thin"
-
-            },
-
-            left: {
-
-                style: "thin"
-
-            },
-
-            right: {
-
-                style: "thin"
-
-            }
-
-        };
-
-    });
-
-    filaEncabezado.height = 24;
-
-    /* ==========================================
-       AGREGAR REGISTROS
-    ========================================== */
-
-    impresoras.forEach((imp, indice) => {
-
-        const fila = hoja.addRow(
-
-    encabezados.map(campo => imp[campo] ?? "")
-
-);
-
-        fila.height = 21;
-
-        fila.eachCell((celda) => {
-
-            celda.alignment = {
-
-                vertical: "middle"
-
-            };
-
-            celda.border = {
-
-                top: {
-
-                    style: "thin",
-
-                    color: {
-
-                        argb: "D9D9D9"
-
-                    }
-
-                },
-
-                bottom: {
-
-                    style: "thin",
-
-                    color: {
-
-                        argb: "D9D9D9"
-
-                    }
-
-                },
-
-                left: {
-
-                    style: "thin",
-
-                    color: {
-
-                        argb: "D9D9D9"
-
-                    }
-
-                },
-
-                right: {
-
-                    style: "thin",
-
-                    color: {
-
-                        argb: "D9D9D9"
-
-                    }
-
-                }
-
-            };
-
-        });
-
-        /* Filas alternadas */
-
-        if (indice % 2 === 0) {
-
-            fila.eachCell((celda) => {
-
-                celda.fill = {
-
-                    type: "pattern",
-
-                    pattern: "solid",
-
-                    fgColor: {
-
-                        argb: "F7F7F7"
-
-                    }
-
-                };
-
-            });
-
-        }
-
-    });
-
-    /* ==========================================
-       FILTROS
-    ========================================== */
-
-    hoja.autoFilter = {
-    from: {
-        row: 10,
-        column: 1
-    },
-    to: {
-        row: 10,
-        column: encabezados.length
     }
-};
 
-    /* ==========================================
-       ANCHO DE COLUMNAS
-    ========================================== */
-
-    hoja.columns = [
-
-        { width: 34 },
-
-        { width: 10 },
-
-        { width: 18 },
-
-        { width: 34 },
-
-        { width: 36 },
-
-        { width: 15 },
-
-        { width: 18 },
-
-        { width: 18 },
-
-        { width: 12 }
-
-    ];
-        /* ==========================================
-       CONFIGURAR IMPRESIÓN
-    ========================================== */
-
-    hoja.pageSetup.printTitlesRow = "10:10";
-
-    hoja.pageSetup.horizontalCentered = true;
-
-    hoja.pageSetup.verticalCentered = false;
-
-    hoja.headerFooter.oddFooter =
-        "&LDepartamento de Informática&CControl Equipos de Cómputo&RPágina &P de &N";
-
-    hoja.headerFooter.evenFooter =
-        "&LDepartamento de Informática&CControl Equipos de Cómputo&RPágina &P de &N";
+  });
 
 
+  /* FILTROS
+     Habilita los filtros automáticos sobre los
+     encabezados de la tabla. */
 
-    /* ==========================================
-       GENERAR ARCHIVO
-    ========================================== */
+  hoja.autoFilter = {
 
-    const buffer = await libro.xlsx.writeBuffer();
+    from: {
 
-    const archivo = new Blob(
-        [buffer],
-        {
-            type:
-                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-        }
-    );
+      row: 10,
+      column: 1,
 
-    /* ==========================================
-       NOMBRE DEL ARCHIVO
-    ========================================== */
+    },
 
-    const nombreArchivo =
+    to: {
 
-       `Gestion_Equipos_${fecha
-            .toLocaleDateString("es-MX")
-            .replace(/\//g, "-")}.xlsx`
+      row: 10,
+      column: encabezados.length,
 
-    saveAs(
-        archivo,
-        nombreArchivo
-    );
+    },
+
+  };
+
+
+  /* ANCHO DE COLUMNAS
+     Define el ancho de las columnas del reporte. */
+
+  hoja.columns = [
+
+    { width: 34 },
+    { width: 10 },
+    { width: 18 },
+    { width: 34 },
+    { width: 36 },
+    { width: 15 },
+    { width: 18 },
+    { width: 18 },
+    { width: 12 },
+
+  ];
+
+
+  /* CONFIGURAR IMPRESIÓN
+     Establece el formato para la impresión del
+     reporte. */
+
+  /* Repetir encabezado en cada página */
+
+  hoja.pageSetup.printTitlesRow = "10:10";
+
+  /* Centrar horizontalmente */
+
+  hoja.pageSetup.horizontalCentered = true;
+
+  /* No centrar verticalmente */
+
+  hoja.pageSetup.verticalCentered = false;
+
+  /* Pie de página (páginas impares) */
+
+  hoja.headerFooter.oddFooter =
+    "&LDepartamento de Informática&CControl Equipos de Cómputo&RPágina &P de &N";
+
+  /* Pie de página (páginas pares) */
+
+  hoja.headerFooter.evenFooter =
+    "&LDepartamento de Informática&CControl Equipos de Cómputo&RPágina &P de &N";
+
+
+  /* GENERAR ARCHIVO
+     Convierte el libro de Excel en un archivo
+     descargable. */
+
+  /* Generar el contenido del archivo */
+
+  const buffer = await libro.xlsx.writeBuffer();
+
+  /* Crear el archivo Blob */
+
+  const archivo = new Blob(
+
+    [buffer],
+
+    {
+
+      type:
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+
+    }
+
+  );
+
+
+  /* NOMBRE DEL ARCHIVO
+     Genera automáticamente el nombre del archivo
+     utilizando la fecha actual. */
+
+  const nombreArchivo =
+
+    `Gestion_Equipos_${fecha
+      .toLocaleDateString("es-MX")
+      .replace(/\//g, "-")}.xlsx`;
+
+
+  /* DESCARGAR ARCHIVO
+     Inicia la descarga del reporte en formato
+     Microsoft Excel. */
+
+  saveAs(
+
+    archivo,
+    nombreArchivo
+
+  );
 
 }

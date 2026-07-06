@@ -1,9 +1,8 @@
 "use client";
 
-/* ==================================================
-   IMPORTACIONES
-================================================== */
+/* IMPORTACIONES */
 
+// Iconos utilizados en la barra de búsqueda, filtros y acciones.
 import {
   Search,
   RefreshCw,
@@ -17,50 +16,67 @@ import {
   ChevronDown,
   Plus,
   FileSpreadsheet,
-  FileText
+  FileText,
 } from "lucide-react";
 
-/* ==================================================
-   PROPIEDADES DEL COMPONENTE
-================================================== */
 
+/* COMPONENTE */
+
+/**
+ * Barra de búsqueda, filtros y acciones principales
+ * del módulo de gestión de equipos.
+ */
 export default function SearchBar({
 
-  /* Buscador */
+  /* BUSCADOR */
 
+  // Texto de búsqueda.
   query,
+
+  // Actualiza el texto de búsqueda.
   setQuery,
 
-  /* Filtros */
 
+  /* FILTROS */
+
+  // Filtro por perfil.
   perfilFilter,
   setPerfilFilter,
 
+  // Filtro por modelo.
   modeloFilter,
   setModeloFilter,
 
+  // Filtro por candado.
   candadoFilter,
   setCandadoFilter,
 
+  // Filtro por conectividad.
   conectividadFilter,
   setConectividadFilter,
 
+  // Filtro por movilidad.
   movilidadFilter,
   setMovilidadFilter,
 
+  // Filtro por folio de resguardo.
   resguardoFilter,
   setResguardoFilter,
 
+  // Filtro por serie del monitor.
   serieMonitorFilter,
   setSerieMonitorFilter,
 
+  // Filtro por serie del mouse.
   serieMouseFilter,
   setSerieMouseFilter,
 
+  // Filtro por modelo del teclado.
   modeloTecladoFilter,
   setModeloTecladoFilter,
 
-  /* Opciones */
+
+  /* OPCIONES DE LOS FILTROS */
 
   opcionesModelo,
   opcionesCandado,
@@ -71,13 +87,17 @@ export default function SearchBar({
   opcionesSerieMouse,
   opcionesModeloTeclado,
 
-  /* Funciones */
 
+  /* FUNCIONES */
+
+  // Abre el formulario para registrar un equipo.
   openNewForm,
 
-   descargarExcel,
+  // Exporta los registros a Excel.
+  descargarExcel,
 
-   descargarPDF
+  // Exporta los registros a PDF.
+  descargarPDF,
 
 }) {
 
@@ -85,12 +105,13 @@ export default function SearchBar({
 
     <>
 
-      {/* ===========================================
-          CONTENEDOR DE FILTROS
-      ============================================ */}
+      {/* CONTENEDOR PRINCIPAL */}
 
       <div className="dash-filters">
-<div className="dash-topbar">
+
+        {/* TÍTULO */}
+
+        <div className="dash-topbar">
 
           <div>
 
@@ -101,14 +122,13 @@ export default function SearchBar({
           </div>
 
         </div>
-        {/* =======================================
-            BARRA DE BÚSQUEDA
-        ======================================== */}
+
+
+        {/* BARRA DE BÚSQUEDA */}
 
         <div className="dash-search-row">
 
-          {/* Buscador */}
-
+          {/* Campo de búsqueda */}
           <label className="dash-search">
 
             <Search size={18} />
@@ -125,29 +145,19 @@ export default function SearchBar({
           </label>
 
           {/* Botón para limpiar todos los filtros */}
-
           <button
             className="dash-refresh-btn"
             onClick={() => {
 
               setQuery("");
-
               setPerfilFilter("Todos");
-
               setModeloFilter("Todos");
-
               setCandadoFilter("Todos");
-
               setConectividadFilter("Todos");
-
               setMovilidadFilter("Todos");
-
               setResguardoFilter("Todos");
-
               setSerieMonitorFilter("Todos");
-
               setSerieMouseFilter("Todos");
-
               setModeloTecladoFilter("Todos");
 
             }}
@@ -160,66 +170,64 @@ export default function SearchBar({
 
         </div>
 
-        {/* =======================================
-            FILTROS DEL DASHBOARD
-        ======================================== */}
+
+        {/* FILTROS */}
 
         <div className="dash-filters-container">
 
           <div className="dash-filters-row">
 
+            {/* FILTRO FOLIO */}
+
+            <div className="dash-filter-card">
+
+              <div className="dash-filter-icon">
+                <Hash size={20} />
+              </div>
+
+              <div className="dash-filter-content">
+
+                <span className="dash-filter-label">
+                  Folio
+                </span>
+
+                <div className="dash-select-wrapper">
+
+                  <select
+                    value={resguardoFilter}
+                    onChange={(e) =>
+                      setResguardoFilter(e.target.value)
+                    }
+                  >
+
+                    {opcionesResguardo.map((opcion, index) => (
+
+                      <option
+                        key={`${opcion}-${index}`}
+                        value={opcion}
+                      >
+
+                        {opcion}
+
+                      </option>
+
+                    ))}
+
+                  </select>
+
+                  <ChevronDown
+                    size={16}
+                    className="dash-select-arrow"
+                  />
+
+                </div>
+
+              </div>
+
+            </div>
 
 
-            {/* =======================================
-    FILTRO FOLIO
-======================================= */}
-
-<div className="dash-filter-card">
-
-  <div className="dash-filter-icon">
-    <Hash size={20} />
-  </div>
-
-  <div className="dash-filter-content">
-
-    <span className="dash-filter-label">
-      Folio
-    </span>
-
-    <div className="dash-select-wrapper">
-
-      <select
-        value={resguardoFilter}
-        onChange={(e) =>
-          setResguardoFilter(e.target.value)
-        }
-      >
-
-        {opcionesResguardo.map((opcion, index) => (
-  <option
-    key={`${opcion}-${index}`}
-    value={opcion}
-  >
-    {opcion}
-  </option>
-))}
-
-      </select>
-
-      <ChevronDown
-        size={16}
-        className="dash-select-arrow"
-      />
-
-    </div>
-
-  </div>
-
-</div>
-
-                        {/* =======================================
-                FILTRO MODELO
-            ======================================== */}
+            {/* FILTRO MODELO */}
 
             <div className="dash-filter-card">
 
@@ -250,7 +258,9 @@ export default function SearchBar({
                         key={opcion}
                         value={opcion}
                       >
-                        {opcion}
+
+                          {opcion}
+
                       </option>
 
                     ))}
@@ -268,180 +278,207 @@ export default function SearchBar({
 
             </div>
 
-
-            {/* =======================================
-    FILTRO SERIE MONITOR
-======================================= */}
-
-<div className="dash-filter-card">
-
-  <div className="dash-filter-icon">
-    <Monitor size={20} />
-  </div>
-
-  <div className="dash-filter-content">
-
-    <span className="dash-filter-label">
-      Serie monitor
-    </span>
-
-    <div className="dash-select-wrapper">
-
-      <select
-        value={serieMonitorFilter}
-        onChange={(e) =>
-          setSerieMonitorFilter(e.target.value)
-        }
-      >
-
-        {opcionesSerieMonitor.map((opcion) => (
-
-          <option
-            key={opcion}
-            value={opcion}
-          >
-            {opcion}
-          </option>
-
-        ))}
-
-      </select>
-
-      <ChevronDown
-        size={16}
-        className="dash-select-arrow"
-      />
-
-    </div>
-
-  </div>
-
-</div>
-
-{/* =======================================
-    FILTRO MODELO TECLADO
-======================================= */}
-
-<div className="dash-filter-card">
-
-  <div className="dash-filter-icon">
-    <Keyboard size={20} />
-  </div>
-
-  <div className="dash-filter-content">
-
-    <span className="dash-filter-label">
-      Modelo teclado
-    </span>
-
-    <div className="dash-select-wrapper">
-
-      <select
-        value={modeloTecladoFilter}
-        onChange={(e) =>
-          setModeloTecladoFilter(e.target.value)
-        }
-      >
-
-        {opcionesModeloTeclado.map((opcion) => (
-
-          <option
-            key={opcion}
-            value={opcion}
-          >
-            {opcion}
-          </option>
-
-        ))}
-
-      </select>
-
-      <ChevronDown
-        size={16}
-        className="dash-select-arrow"
-      />
-
-    </div>
-
-  </div>
-
-</div>  
-
-{/* =======================================
-    FILTRO SERIE MOUSE
-======================================= */}
-
-<div className="dash-filter-card">
-
-  <div className="dash-filter-icon">
-    <Mouse size={20} />
-  </div>
-
-  <div className="dash-filter-content">
-
-    <span className="dash-filter-label">
-      Serie mouse
-    </span>
-
-    <div className="dash-select-wrapper">
-
-      <select
-        value={serieMouseFilter}
-        onChange={(e) =>
-          setSerieMouseFilter(e.target.value)
-        }
-      >
-
-        {opcionesSerieMouse.map((opcion) => (
-
-          <option
-            key={opcion}
-            value={opcion}
-          >
-            {opcion}
-          </option>
-
-        ))}
-
-      </select>
-
-      <ChevronDown
-        size={16}
-        className="dash-select-arrow"
-      />
-
-    </div>
-
-  </div>
-
-</div>
-            {/* =======================================
-                FILTRO CANDADO
-            ======================================== */}
+            {/* FILTRO SERIE MONITOR */}
 
             <div className="dash-filter-card">
 
+              {/* Icono del filtro */}
               <div className="dash-filter-icon">
+                <Monitor size={20} />
+              </div>
 
-                <Shield size={20} />
+              {/* Contenido del filtro */}
+              <div className="dash-filter-content">
+
+                {/* Etiqueta */}
+                <span className="dash-filter-label">
+                  Serie monitor
+                </span>
+
+                {/* Selector */}
+                <div className="dash-select-wrapper">
+
+                  <select
+                    value={serieMonitorFilter}
+                    onChange={(e) =>
+                      setSerieMonitorFilter(
+                        e.target.value
+                      )
+                    }
+                  >
+
+                    {/* Opciones disponibles */}
+                    {opcionesSerieMonitor.map((opcion) => (
+
+                      <option
+                        key={opcion}
+                        value={opcion}
+                      >
+
+                        {opcion}
+
+                      </option>
+
+                    ))}
+
+                  </select>
+
+                  {/* Flecha del selector */}
+                  <ChevronDown
+                    size={16}
+                    className="dash-select-arrow"
+                  />
+
+                </div>
 
               </div>
 
+            </div>
+
+            {/* FILTRO MODELO TECLADO */}
+
+            <div className="dash-filter-card">
+
+              {/* Icono del filtro */}
+              <div className="dash-filter-icon">
+
+                <Keyboard size={20} />
+
+              </div>
+
+              {/* Contenido del filtro */}
               <div className="dash-filter-content">
 
+                {/* Etiqueta */}
+                <span className="dash-filter-label">
+                  Modelo teclado
+                </span>
+
+                {/* Selector */}
+                <div className="dash-select-wrapper">
+
+                  <select
+                    value={modeloTecladoFilter}
+                    onChange={(e) =>
+                      setModeloTecladoFilter(
+                        e.target.value
+                      )
+                    }
+                  >
+
+                    {/* Opciones disponibles */}
+                    {opcionesModeloTeclado.map((opcion) => (
+
+                      <option
+                        key={opcion}
+                        value={opcion}
+                      >
+
+                        {opcion}
+
+                      </option>
+
+                    ))}
+
+                  </select>
+
+                  {/* Flecha del selector */}
+                  <ChevronDown
+                    size={16}
+                    className="dash-select-arrow"
+                  />
+
+                </div>
+
+              </div>
+
+            </div>
+
+            {/* FILTRO SERIE MOUSE */}
+
+            <div className="dash-filter-card">
+
+              {/* Icono del filtro */}
+              <div className="dash-filter-icon">
+                <Mouse size={20} />
+              </div>
+
+              {/* Contenido del filtro */}
+              <div className="dash-filter-content">
+
+                {/* Etiqueta */}
+                <span className="dash-filter-label">
+                  Serie mouse
+                </span>
+
+                {/* Selector */}
+                <div className="dash-select-wrapper">
+
+                  <select
+                    value={serieMouseFilter}
+                    onChange={(e) =>
+                      setSerieMouseFilter(
+                        e.target.value
+                      )
+                    }
+                  >
+                    {/* Opciones disponibles */}
+                    {opcionesSerieMouse.map((opcion) => (
+
+                      <option
+                        key={opcion}
+                        value={opcion}
+                      >
+                        {opcion}
+
+                      </option>
+
+                    ))}
+
+                  </select>
+
+                  {/* Flecha del selector */}
+                  <ChevronDown
+                    size={16}
+                    className="dash-select-arrow"
+                  />
+
+                </div>
+
+              </div>
+
+            </div>
+
+            {/* FILTRO CANDADO */}
+
+            <div className="dash-filter-card">
+
+              {/* Icono del filtro */}
+              <div className="dash-filter-icon">
+                <Shield size={20} />
+              </div>
+
+              {/* Contenido del filtro */}
+              <div className="dash-filter-content">
+
+                {/* Etiqueta */}
                 <span className="dash-filter-label">
                   Candado
                 </span>
 
+                {/* Selector */}
                 <div className="dash-select-wrapper">
 
                   <select
                     value={candadoFilter}
                     onChange={(e) =>
-                      setCandadoFilter(e.target.value)
+                      setCandadoFilter(
+                        e.target.value
+                      )
                     }
                   >
 
+                    {/* Opciones disponibles */}
                     {opcionesCandado.map((opcion) => (
 
                       <option
@@ -449,12 +486,14 @@ export default function SearchBar({
                         value={opcion}
                       >
                         {opcion}
+
                       </option>
 
                     ))}
 
                   </select>
 
+                  {/* Flecha del selector */}
                   <ChevronDown
                     size={16}
                     className="dash-select-arrow"
@@ -466,33 +505,38 @@ export default function SearchBar({
 
             </div>
 
-            {/* =======================================
-                FILTRO CONECTIVIDAD
-            ======================================== */}
+            {/* FILTRO CONECTIVIDAD */}
 
             <div className="dash-filter-card">
 
+              {/* Icono del filtro */}
               <div className="dash-filter-icon">
 
                 <Wifi size={20} />
 
               </div>
 
+              {/* Contenido del filtro */}
               <div className="dash-filter-content">
 
+                {/* Etiqueta */}
                 <span className="dash-filter-label">
                   Conectividad
                 </span>
 
+                {/* Selector */}
                 <div className="dash-select-wrapper">
 
                   <select
                     value={conectividadFilter}
                     onChange={(e) =>
-                      setConectividadFilter(e.target.value)
+                      setConectividadFilter(
+                        e.target.value
+                      )
                     }
                   >
 
+                    {/* Opciones disponibles */}
                     {opcionesConectividad.map((opcion) => (
 
                       <option
@@ -506,6 +550,7 @@ export default function SearchBar({
 
                   </select>
 
+                  {/* Flecha del selector */}
                   <ChevronDown
                     size={16}
                     className="dash-select-arrow"
@@ -517,33 +562,38 @@ export default function SearchBar({
 
             </div>
 
-            {/* =======================================
-                FILTRO MOVILIDAD
-            ======================================== */}
+            {/* FILTRO MOVILIDAD */}
 
             <div className="dash-filter-card">
 
+              {/* Icono del filtro */}
               <div className="dash-filter-icon">
 
                 <Laptop size={20} />
 
               </div>
 
+              {/* Contenido del filtro */}
               <div className="dash-filter-content">
 
+                {/* Etiqueta */}
                 <span className="dash-filter-label">
                   Movilidad
                 </span>
 
+                {/* Selector */}
                 <div className="dash-select-wrapper">
 
                   <select
                     value={movilidadFilter}
                     onChange={(e) =>
-                      setMovilidadFilter(e.target.value)
+                      setMovilidadFilter(
+                        e.target.value
+                      )
                     }
                   >
 
+                    {/* Opciones disponibles */}
                     {opcionesMovilidad.map((opcion) => (
 
                       <option
@@ -557,6 +607,7 @@ export default function SearchBar({
 
                   </select>
 
+                  {/* Flecha del selector */}
                   <ChevronDown
                     size={16}
                     className="dash-select-arrow"
@@ -566,48 +617,52 @@ export default function SearchBar({
 
               </div>
 
-            </div>       
-</div> 
+            </div>
 
-                    {/* =======================================
-            ACCIONES
-        ======================================== */}
+          </div>
 
-        <div className="dash-actions-row">
 
-    <div className="dash-export-buttons">
+          {/* BOTONES DE ACCIÓN */}
 
-    <button
-        className="dash-btn-excel"
-        onClick={descargarExcel}
-    >
-        <FileSpreadsheet size={18} />
-        Exportar Excel
-    </button>
+          <div className="dash-actions-row">
 
-    <button
-        className="dash-btn-pdf"
-        onClick={descargarPDF}
-    >
-        <FileText size={18} />
-        Exportar PDF
-    </button>
+            {/* Exportaciones */}
+            <div className="dash-export-buttons">
 
-</div>
+              {/* Exportar a Excel */}
+              <button
+                className="dash-btn-excel"
+                onClick={descargarExcel}
+              >
+                <FileSpreadsheet size={18} />
+                Exportar Excel
+              </button>
 
-    <button
-        className="dash-btn-new"
-        onClick={openNewForm}
-    >
-        <Plus size={18}/>
-        Nuevo registro
-    </button>
+              {/* Exportar a PDF */}
+              <button
+                className="dash-btn-pdf"
+                onClick={descargarPDF}
+              >
+                <FileText size={18} />
+                Exportar PDF
+              </button>
 
-</div>
+            </div>
+
+            {/* Nuevo registro */}
+            <button
+              className="dash-btn-new"
+              onClick={openNewForm}
+            >
+              <Plus size={18} />
+              Nuevo registro
+            </button>
+
+          </div>
+
+        </div>
 
       </div>
-
-    </div>
 
     </>
 

@@ -1,32 +1,39 @@
 "use client";
 
-/* ==================================================
-   IMPORTACIONES
-================================================== */
+/* IMPORTACIONES */
 
+// Iconos utilizados para las acciones de la tabla.
 import {
   Pencil,
   Trash2,
 } from "lucide-react";
 
-/* ==================================================
-   PROPIEDADES DEL COMPONENTE
-================================================== */
 
+/* COMPONENTE */
+
+/**
+ * Tabla encargada de mostrar los registros de equipos
+ * junto con las acciones disponibles para cada uno.
+ */
 export default function EquipmentTable({
 
-  /* Información */
+  /* INFORMACIÓN */
 
+  // Columnas que se mostrarán en la tabla.
   tableColumns,
 
+  // Lista completa de registros filtrados.
   filteredData,
 
+  // Registros correspondientes a la página actual.
   currentRecords,
 
-  /* Funciones */
+  /* FUNCIONES */
 
+  // Abre el formulario para editar un registro.
   openEditForm,
 
+  // Elimina un registro seleccionado.
   handleDelete,
 
 }) {
@@ -35,34 +42,31 @@ export default function EquipmentTable({
 
     <>
 
-      {/* ===========================================
-          CONTENEDOR DE LA TABLA
-      ============================================ */}
+      {/* CONTENEDOR PRINCIPAL DE LA TABLA */}
 
       <div className="dash-table-wrap">
 
+        {/* Contenedor con desplazamiento */}
         <div className="dash-table-scroll">
 
           <table className="dash-table">
 
-            {/* =======================================
-                ENCABEZADO DE LA TABLA
-            ======================================== */}
+            {/* ENCABEZADO DE LA TABLA */}
 
             <thead>
 
               <tr>
 
+                {/* Genera dinámicamente los encabezados */}
                 {tableColumns.map((column) => (
 
                   <th key={column.key}>
-
                     {column.label}
-
                   </th>
 
                 ))}
 
+                {/* Columna para acciones */}
                 <th>
                   Acciones
                 </th>
@@ -71,14 +75,12 @@ export default function EquipmentTable({
 
             </thead>
 
-            {/* =======================================
-                CUERPO DE LA TABLA
-            ======================================== */}
+
+            {/* CUERPO DE LA TABLA */}
 
             <tbody>
-                              {/* =======================================
-                  REGISTROS
-              ======================================== */}
+
+              {/* REGISTROS */}
 
               {filteredData.length > 0 ? (
 
@@ -93,32 +95,24 @@ export default function EquipmentTable({
                     }
                   >
 
-                    {/* ===================================
-                        COLUMNAS
-                    ==================================== */}
+                    {/* COLUMNAS DE INFORMACIÓN */}
 
                     {tableColumns.map((column) => (
 
                       <td key={column.key}>
-
                         {item[column.key]}
-
                       </td>
 
                     ))}
 
-                    {/* ===================================
-                        ACCIONES
-                    ==================================== */}
+
+                    {/* ACCIONES */}
 
                     <td>
 
                       <div className="dash-actions">
 
-                        {/* ===============================
-                            EDITAR
-                        ================================ */}
-
+                        {/* Botón para editar el registro */}
                         <button
                           onClick={() =>
                             openEditForm(item)
@@ -131,10 +125,7 @@ export default function EquipmentTable({
 
                         </button>
 
-                        {/* ===============================
-                            ELIMINAR
-                        ================================ */}
-
+                        {/* Botón para eliminar el registro */}
                         <button
                           onClick={() =>
                             handleDelete(item._id)
@@ -156,7 +147,9 @@ export default function EquipmentTable({
                 ))
 
               ) : (
-                                <tr>
+
+                /* Mensaje cuando no existen registros */
+                <tr>
 
                   <td
                     colSpan={
@@ -164,9 +157,7 @@ export default function EquipmentTable({
                     }
                     className="dash-empty"
                   >
-
                     No hay registros para mostrar todavía.
-
                   </td>
 
                 </tr>
