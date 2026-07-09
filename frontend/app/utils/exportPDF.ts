@@ -303,7 +303,6 @@ export async function exportarPDF(
 
       doc.setFontSize(18);
       doc.setTextColor(170);
-      doc.text("|", 55, 18);
 
       /* TÍTULO */
 
@@ -453,16 +452,6 @@ export async function exportarPDF(
           align: "right",
 
         }
-
-      );
-
-      /* Línea divisoria */
-
-      doc.line(
-        10,
-        196,
-        pageWidth - 10,
-        196
 
       );
 

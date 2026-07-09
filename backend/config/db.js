@@ -2,7 +2,7 @@
 const { MongoClient } = require("mongodb");
 
 // Obtiene la cadena de conexión desde la variable de entorno MONGO_URI.
-const uri = process.env.MONGO_URI;
+const uri = process.env.MONGODB_URI;
 
 /**
  * Función asíncrona encargada de establecer la conexión
