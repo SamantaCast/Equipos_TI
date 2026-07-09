@@ -4,13 +4,15 @@ Sistema web desarrollado para la administración e inventario de equipos de cóm
 
 Permite registrar, consultar, editar, eliminar y exportar la información de los activos informáticos mediante una interfaz moderna, intuitiva y segura.
 
+---
 
-## Vista general
+# Vista general
 
 El sistema fue desarrollado para facilitar la gestión del inventario de equipos de cómputo del Departamento de Informática, centralizando toda la información de los activos tecnológicos en una sola plataforma.
 
+---
 
-## Características
+# Características
 
 - Inicio de sesión seguro mediante JWT.
 - Registro de equipos de cómputo.
@@ -19,40 +21,12 @@ El sistema fue desarrollado para facilitar la gestión del inventario de equipos
 - Búsqueda general en tiempo real.
 - Filtros dinámicos.
 - Paginación configurable.
-- Exportación a Excel.
-- Exportación a PDF.
-- Diseño responsive.
-- Interfaz moderna desarrollada con Next.js.
-
-=======
-Sistema web desarrollado para la administración e inventario de equipos de cómputo. Permite registrar, consultar, editar, eliminar y exportar información de los activos informáticos de la organización.
-
----
-
-# Características
-
-- Inicio de sesión con autenticación mediante JWT.
-- Gestión completa de equipos de cómputo (CRUD).
-- Búsqueda general en tiempo real.
-- Filtros dinámicos por:
-  - Perfil.
-  - Modelo.
-  - Candado.
-  - Conectividad.
-  - Movilidad.
-  - Folio.
-  - Serie del monitor.
-  - Serie del mouse.
-  - Modelo del teclado.
-- Paginación configurable.
-- Exportación a:
-  - Excel (.xlsx)
-  - PDF (.pdf)
+- Exportación a Excel (.xlsx).
+- Exportación a PDF (.pdf).
 - Diseño responsive.
 - Interfaz moderna desarrollada con Next.js.
 
 ---
->>>>>>> 66a2801 (Eliminacion de React)
 
 # Tecnologías utilizadas
 
@@ -77,38 +51,21 @@ Sistema web desarrollado para la administración e inventario de equipos de cóm
 - JSON Web Token (JWT)
 - bcrypt
 
-<<<<<<< HEAD
+---
 
 # Estructura del proyecto
 
 ```text
 Equipos_TI/
-
-=======
----
-
-# Estructura del proyecto
-
-```
-Control-Equipos/
-
 │
-├── frontend/
-│   ├── app/
-│   ├── components/
-│   ├── styles/
-│   ├── utils/
-│   └── public/
-│
->>>>>>> 66a2801 (Eliminacion de React)
 ├── backend/
-│   ├── controllers/
+│   ├── config/
 │   ├── middleware/
 │   ├── models/
 │   ├── routes/
-<<<<<<< HEAD
 │   ├── server.js
-│   └── package.json
+│   ├── package.json
+│   └── .env
 │
 ├── frontend/
 │   ├── app/
@@ -119,73 +76,10 @@ Control-Equipos/
 │   │   └── globals.css
 │   │
 │   ├── public/
-│   │   └── logos/
-│   │
-│   └── package.json
+│   ├── package.json
+│   └── .env.local
 │
 ├── .gitignore
-└── README.md
-```
-
-
-# Instalación
-
-## Clonar el repositorio
-
-```bash
-git clone https://github.com/SamantaCast/Equipos_TI.git
-```
-
-Entrar al proyecto
-
-```bash
-cd Equipos_TI
-```
-
-
-# Instalar dependencias
-
-## Backend
-
-```bash
-cd backend
-
-npm install
-```
-
-## Frontend
-
-```bash
-cd frontend
-
-npm install
-```
-
-
-# Variables de entorno
-
-## Backend
-
-Crear un archivo:
-
-```text
-backend/.env
-```
-
-Ejemplo:
-
-```env
-PORT=5000
-
-MONGODB_URI=TU_CADENA_DE_CONEXION
-
-JWT_SECRET=TU_CLAVE_SECRETA
-```
-
-
-=======
-│   └── server.js
-│
 └── README.md
 ```
 
@@ -196,24 +90,30 @@ JWT_SECRET=TU_CLAVE_SECRETA
 ## 1. Clonar el repositorio
 
 ```bash
-git clone https://github.com/usuario/control-equipos.git
+git clone https://github.com/SamantaCast/Equipos_TI.git
+```
+
+## 2. Entrar al proyecto
+
+```bash
+cd Equipos_TI
 ```
 
 ---
 
-## 2. Instalar dependencias
+# Instalar dependencias
 
-### Frontend
-
-```bash
-cd frontend
-npm install
-```
-
-### Backend
+## Backend
 
 ```bash
 cd backend
+npm install
+```
+
+## Frontend
+
+```bash
+cd ../frontend
 npm install
 ```
 
@@ -221,38 +121,11 @@ npm install
 
 # Variables de entorno
 
->>>>>>> 66a2801 (Eliminacion de React)
-## Frontend
-
-Crear un archivo:
-
-<<<<<<< HEAD
-```text
-frontend/.env.local
-```
-
-Ejemplo:
-=======
-```
-frontend/.env.local
-```
-
-Contenido:
->>>>>>> 66a2801 (Eliminacion de React)
-
-```env
-NEXT_PUBLIC_API_URL=http://localhost:5000
-```
-
-<<<<<<< HEAD
-=======
----
-
 ## Backend
 
-Crear un archivo:
+Crear el archivo:
 
-```
+```text
 backend/.env
 ```
 
@@ -261,49 +134,50 @@ Contenido:
 ```env
 PORT=5000
 
-MONGODB_URI=TU_CADENA_DE_CONEXIÓN
+MONGODB_URI=TU_CADENA_DE_CONEXION
 
 JWT_SECRET=TU_CLAVE_SECRETA
 ```
 
+## Frontend
+
+Crear el archivo:
+
+```text
+frontend/.env.local
+```
+
+Contenido:
+
+```env
+NEXT_PUBLIC_API_URL=http://localhost:5000
+```
+
 ---
->>>>>>> 66a2801 (Eliminacion de React)
 
 # Ejecutar el proyecto
 
 ## Backend
 
 ```bash
-<<<<<<< HEAD
-npm run dev
-=======
 cd backend
-
-npm start
->>>>>>> 66a2801 (Eliminacion de React)
+npm run dev
 ```
 
 o
 
 ```bash
-<<<<<<< HEAD
 npm start
 ```
-
-=======
-npm run dev
-```
-
----
->>>>>>> 66a2801 (Eliminacion de React)
 
 ## Frontend
 
 ```bash
-<<<<<<< HEAD
+cd frontend
 npm run dev
 ```
 
+---
 
 # Funcionalidades
 
@@ -314,46 +188,12 @@ npm run dev
 - Eliminar registros.
 - Consultar inventario.
 - Búsqueda inteligente.
-- Filtros dinámicos.
+- Aplicación de filtros.
 - Paginación configurable.
-
 
 ## Reportes
 
-El sistema permite generar reportes profesionales en:
-=======
-cd frontend
-
-npm run dev
-```
-
----
-
-# Funcionalidades
-
-## Autenticación
-
-- Inicio de sesión.
-- Protección mediante JWT.
-- Cierre de sesión.
-
----
-
-## Gestión de equipos
-
-- Registrar equipo.
-- Editar equipo.
-- Eliminar equipo.
-- Buscar registros.
-- Filtrar información.
-- Paginación.
-
----
-
-## Exportación
-
 El sistema permite generar reportes en:
->>>>>>> 66a2801 (Eliminacion de React)
 
 - Excel (.xlsx)
 - PDF (.pdf)
@@ -363,42 +203,28 @@ Incluyendo:
 - Logos institucionales.
 - Fecha y hora de generación.
 - Total de registros.
-<<<<<<< HEAD
 - Encabezados personalizados.
 - Diseño optimizado para impresión.
 
+---
 
 # Seguridad
 
 - Autenticación mediante JWT.
 - Protección de rutas.
-- Almacenamiento seguro del token.
 - Validación de credenciales.
+- Almacenamiento seguro del token.
 
+---
 
 # Autor
 
-Desarrolladora del Sistema de Gestión de Equipos de Cómputo.
+**Samanta Martínez Castillo**
 
 Proyecto desarrollado para el **Departamento de Informática** de **Leche para el Bienestar S.A. de C.V.**
 
-# Licencia
-
-Proyecto desarrollado para uso interno del Departamento de Informática de Leche para el Bienestar S.A. de C.V.
-=======
-- Diseño profesional para impresión.
-
----
-
-# Autor
-
-Departamento de Informática
-
-Leche para el Bienestar S.A. de C.V.
-
 ---
 
 # Licencia
 
-Este proyecto fue desarrollado para uso interno de la organización.
->>>>>>> 66a2801 (Eliminacion de React)
+Proyecto desarrollado para uso interno del Departamento de Informática de **Leche para el Bienestar S.A. de C.V.**
