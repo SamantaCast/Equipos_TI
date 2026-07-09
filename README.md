@@ -1,6 +1,5 @@
 # Sistema de Gestión de Equipos de Cómputo
 
-<<<<<<< HEAD
 Sistema web desarrollado para la administración e inventario de equipos de cómputo.
 
 Permite registrar, consultar, editar, eliminar y exportar la información de los activos informáticos mediante una interfaz moderna, intuitiva y segura.
