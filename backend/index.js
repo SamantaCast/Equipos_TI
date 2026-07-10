@@ -138,6 +138,7 @@ app.post("/api/login", async (req, res) => {
         id: usuarioEncontrado._id,
         nombre: usuarioEncontrado.nombre,
         usuario: usuarioEncontrado.usuario,
+        genero: usuarioEncontrado.genero,
         rol: usuarioEncontrado.rol,
       },
 

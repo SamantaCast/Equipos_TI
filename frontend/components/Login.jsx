@@ -14,7 +14,6 @@ import {
 } from "lucide-react";
 import Swal from "sweetalert2";
 
-
 /* COMPONENTE LOGIN
    Muestra el formulario de autenticación del
    sistema. */
@@ -50,9 +49,7 @@ export default function Login() {
 
     try {
 
-      console.log(
-        process.env.NEXT_PUBLIC_API_URL
-      );
+      console.log(process.env.NEXT_PUBLIC_API_URL);
 
       const respuesta = await fetch(
 
@@ -61,17 +58,14 @@ export default function Login() {
         {
 
           method: "POST",
+
           headers: {
-
             "Content-Type": "application/json",
-
           },
 
           body: JSON.stringify({
-
             usuario,
             password,
-
           }),
 
         }
@@ -80,8 +74,7 @@ export default function Login() {
 
       const datos = await respuesta.json();
 
-      /* VALIDAR RESPUESTA
-         Comprueba si las credenciales son válidas. */
+      /* VALIDAR RESPUESTA */
 
       if (!respuesta.ok) {
 
@@ -98,47 +91,52 @@ export default function Login() {
 
       }
 
-      /* INICIO DE SESIÓN EXITOSO
-         Muestra un mensaje de bienvenida. */
+      /* DETERMINA EL SALUDO SEGÚN EL GÉNERO */
+
+      const saludo =
+        datos.usuario.genero === "F"
+          ? "Bienvenida"
+          : "Bienvenido";
+
+      /* MENSAJE DE BIENVENIDA */
 
       await Swal.fire({
 
         icon: "success",
-        title: "Bienvenida",
+        title: saludo,
         text: `Hola, ${datos.usuario.nombre}`,
         confirmButtonColor: "#8b1e3f",
         confirmButtonText: "Continuar",
 
       });
 
-      /* GUARDAR INFORMACIÓN DEL USUARIO
-         Almacena los datos de autenticación en el
-         navegador. */
+      /* GUARDA LOS DATOS DEL USUARIO */
 
       localStorage.setItem(
         "usuario",
         JSON.stringify(datos.usuario)
-
       );
 
-      localStorage.setItem(
-        "token",
-        datos.token
+      if (datos.token) {
 
-      );
+        localStorage.setItem(
+          "token",
+          datos.token
+        );
 
-      /* REDIRECCIONAR AL DASHBOARD */
+      }
+
+      /* REDIRECCIONA AL DASHBOARD */
 
       router.push("/dashboard");
 
-    }
-
-    catch (error) {
+    } catch (error) {
 
       console.error(error);
 
       Swal.fire({
 
+        icon: "error",
         title: "Error",
         text: "No fue posible conectar con el servidor.",
         confirmButtonColor: "#8b1e3f",
@@ -149,9 +147,7 @@ export default function Login() {
 
   };
 
-  /* ENVIAR FORMULARIO
-     Ejecuta el proceso de autenticación cuando el
-     usuario envía el formulario.*/
+  /* ENVÍA EL FORMULARIO */
 
   const handleSubmit = (e) => {
 
@@ -160,45 +156,39 @@ export default function Login() {
 
   };
 
-  /* INTERFAZ
-     Renderiza la pantalla de inicio de sesión. */
+  /* INTERFAZ */
 
   return (
 
     <main className="login-page">
+
       <section className="login-card">
 
-        {/* ICONO DEL USUARIO */}
+        {/* ICONO */}
 
         <div className="user-circle">
 
           <User
-
             size={48}
             color="white"
-
           />
 
         </div>
 
-        {/* FORMULARIO DE INICIO DE SESIÓN */}
+        {/* FORMULARIO */}
 
         <form
-
           onSubmit={handleSubmit}
           className="login-form"
-
         >
 
-          {/* CAMPO USUARIO */}
+          {/* USUARIO */}
 
           <div className="input-group">
 
             <User
-
               size={18}
               className="input-icon"
-
             />
 
             <input
@@ -207,6 +197,7 @@ export default function Login() {
               placeholder="Usuario"
               autoComplete="username"
               value={usuario}
+
               onChange={(e) =>
                 setUsuario(e.target.value)
               }
@@ -226,22 +217,20 @@ export default function Login() {
 
           </div>
 
-          {/* CAMPO CONTRASEÑA */}
+          {/* CONTRASEÑA */}
 
           <div className="input-group">
 
             <Lock
-
               size={18}
               className="input-icon"
-
             />
 
             <input
 
               ref={passwordRef}
-              type={
 
+              type={
                 mostrarPassword
                   ? "text"
                   : "password"
@@ -250,52 +239,41 @@ export default function Login() {
               placeholder="Contraseña"
               autoComplete="current-password"
               value={password}
+
               onChange={(e) =>
-
                 setPassword(e.target.value)
-
               }
 
             />
-
-            {/* MOSTRAR / OCULTAR CONTRASEÑA */}
 
             <button
 
               type="button"
               className="toggle-password"
+
               onClick={() =>
-
-                setMostrarPassword(
-                  !mostrarPassword
-
-                )
-
+                setMostrarPassword(!mostrarPassword)
               }
 
             >
 
-              {mostrarPassword ? (
+              {
 
-                <EyeOff size={20} />
+                mostrarPassword
+                  ? <EyeOff size={20} />
+                  : <Eye size={20} />
 
-              ) : (
-
-                <Eye size={20} />
-
-              )}
+              }
 
             </button>
 
           </div>
 
-          {/* BOTÓN INICIAR SESIÓN */}
+          {/* BOTÓN */}
 
           <button
-
             type="submit"
             className="btn-login"
-
           >
             INICIAR SESIÓN
           </button>
