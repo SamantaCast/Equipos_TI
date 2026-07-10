@@ -219,8 +219,6 @@ Incluyendo:
 
 # Autor
 
-**Samanta Martínez Castillo**
-
 Proyecto desarrollado para el **Departamento de Informática** de **Leche para el Bienestar S.A. de C.V.**
 
 ---
