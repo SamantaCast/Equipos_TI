@@ -93,12 +93,14 @@ export default function Login() {
 
       /* DETERMINA EL SALUDO SEGÚN EL GÉNERO */
 
-      const saludo =
-        datos.usuario.genero === "F"
-          ? "Bienvenida"
-          : "Bienvenido";
+     const genero = (datos.usuario.genero || "")
+      .trim()
+      .toUpperCase();
 
-      /* MENSAJE DE BIENVENIDA */
+    const saludo =
+      genero === "F"
+        ? "Bienvenida"
+        : "Bienvenido";
 
       await Swal.fire({
 

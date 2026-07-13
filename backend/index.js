@@ -10,6 +10,9 @@ const cors = require("cors");
 // Importa ObjectId para trabajar con identificadores de MongoDB.
 const { ObjectId } = require("mongodb");
 
+// Importa JWT.
+const jwt = require("jsonwebtoken");
+
 // Importa la función encargada de establecer la conexión con la base de datos.
 const conectarDB = require("./config/db");
 
@@ -25,8 +28,7 @@ app.use(express.json());
 // Variable que almacenará la conexión a la base de datos.
 let db;
 
-
-/*INICIAR SERVIDOR */
+/* INICIAR SERVIDOR */
 
 /**
  * Establece la conexión con MongoDB e inicia el servidor.
@@ -40,20 +42,17 @@ async function iniciarServidor() {
 
     // Obtiene el puerto desde las variables de entorno
     // o utiliza el puerto 5000 por defecto.
-    const PORT =
-      process.env.PORT || 5000;
+    const PORT = process.env.PORT || 5000;
 
-    // Inicia el servidor y lo deja escuchando conexiones.
+    // Inicia el servidor.
     app.listen(PORT, "0.0.0.0", () => {
 
-      // Muestra un mensaje cuando el servidor inicia correctamente.
       console.log(`Servidor iniciado en el puerto ${PORT}`);
 
     });
 
   } catch (error) {
 
-    // Muestra un mensaje si ocurre un error al iniciar el servidor.
     console.error(
       "No se pudo iniciar el servidor:",
       error
@@ -63,23 +62,20 @@ async function iniciarServidor() {
 
 }
 
-// Ejecuta la función que inicia el servidor.
+// Ejecuta el servidor.
 iniciarServidor();
-
-
 
 /* RUTA PRINCIPAL */
 
 /**
  * GET /
- * Verifica que el backend esté funcionando correctamente.
+ * Verifica que el backend esté funcionando.
  */
 app.get("/", (req, res) => {
 
   res.send("Backend funcionando");
 
 });
-
 
 /* LOGIN */
 
@@ -91,221 +87,233 @@ app.post("/api/login", async (req, res) => {
 
   try {
 
-    // Muestra el cuerpo recibido para depuración.
-    console.log("Body recibido:", req.body);
-
-    // Obtiene el usuario y la contraseña enviados.
     const { usuario, password } = req.body;
 
     console.log("Usuario:", usuario);
 
-    // Obtiene todos los usuarios registrados.
-    const usuarios = await db.collection("user").find().toArray();
-
-    console.log("Usuarios:", usuarios);
-
-    // Busca el usuario por su nombre de usuario.
+    // Busca el usuario.
     const usuarioEncontrado = await db
       .collection("user")
       .findOne({ usuario });
 
-    console.log("Resultado:", usuarioEncontrado);
-
-    // Verifica que el usuario exista.
+    // Verifica que exista.
     if (!usuarioEncontrado) {
 
       return res.status(401).json({
+
         mensaje: "Usuario incorrecto",
+
       });
 
     }
 
-    // Verifica que la contraseña coincida.
+    // Verifica la contraseña.
     if (usuarioEncontrado.password !== password) {
 
       return res.status(401).json({
+
         mensaje: "Contraseña incorrecta",
+
       });
 
     }
 
-    // Devuelve la información del usuario autenticado.
+    // Genera el token JWT.
+    const token = jwt.sign(
+
+      {
+
+        id: usuarioEncontrado._id,
+        usuario: usuarioEncontrado.usuario,
+        rol: usuarioEncontrado.rol,
+
+      },
+
+      process.env.JWT_SECRET,
+
+      {
+
+        expiresIn: "8h",
+
+      }
+
+    );
+
+    console.log(
+      "Login correcto:",
+      usuarioEncontrado.usuario
+    );
+
+    // Devuelve la información del usuario.
     res.json({
 
       mensaje: "Login exitoso",
 
+      token,
+
       usuario: {
+
         id: usuarioEncontrado._id,
         nombre: usuarioEncontrado.nombre,
         usuario: usuarioEncontrado.usuario,
         genero: usuarioEncontrado.genero,
         rol: usuarioEncontrado.rol,
+
       },
 
     });
 
   } catch (error) {
 
-    // Muestra el error en consola.
     console.error(error);
 
-    // Responde con un error interno del servidor.
     res.status(500).json({
+
       mensaje: "Error del servidor",
+
     });
 
   }
 
 });
-
 
 /* OBTENER EQUIPOS */
 
 /**
  * GET /api/equipos
- * Obtiene todos los registros de equipos.
+ * Obtiene todos los registros.
  */
 app.get("/api/equipos", async (req, res) => {
 
   try {
 
-    // Consulta todos los documentos de la colección "datos".
     const equipos = await db
       .collection("datos")
       .find({})
       .toArray();
 
-    // Devuelve los registros encontrados.
     res.json(equipos);
 
   } catch (error) {
 
-    // Muestra el error en consola.
     console.error(error);
 
-    // Devuelve un error del servidor.
     res.status(500).json(error);
 
   }
 
 });
-
 
 /* AGREGAR EQUIPO */
 
 /**
  * POST /api/equipos
- * Agrega un nuevo equipo a la base de datos.
+ * Agrega un nuevo equipo.
  */
 app.post("/api/equipos", async (req, res) => {
 
   try {
 
-    // Inicia un temporizador para medir el tiempo de inserción.
     console.time("INSERTAR");
 
-    // Obtiene los datos enviados desde el cliente.
     const nuevoEquipo = req.body;
 
-    // Inserta el nuevo documento en la colección.
     const resultado = await db
       .collection("datos")
       .insertOne(nuevoEquipo);
 
-    // Finaliza el temporizador.
     console.timeEnd("INSERTAR");
 
-    // Devuelve el identificador del registro creado.
     res.status(201).json({
+
       insertedId: resultado.insertedId,
+
     });
 
   } catch (error) {
 
-    // Muestra el error en consola.
     console.error(error);
 
-    // Devuelve un error del servidor.
     res.status(500).json(error);
 
   }
 
 });
-
 
 /* EDITAR EQUIPO */
 
 /**
  * PUT /api/equipos/:id
- * Actualiza un equipo utilizando su identificador.
+ * Actualiza un registro.
  */
 app.put("/api/equipos/:id", async (req, res) => {
 
   try {
 
-    // Obtiene el ID enviado en la URL.
     const { id } = req.params;
 
-    // Obtiene los nuevos datos del equipo.
     const datosActualizados = req.body;
 
-    // Actualiza el documento correspondiente.
     await db.collection("datos").updateOne(
+
       {
+
         _id: new ObjectId(id),
+
       },
+
       {
+
         $set: datosActualizados,
+
       }
+
     );
 
-    // Confirma la actualización.
     res.json({
+
       mensaje: "Registro actualizado",
+
     });
 
   } catch (error) {
 
-    // Muestra el error en consola.
     console.error(error);
 
-    // Devuelve un error del servidor.
     res.status(500).json(error);
 
   }
 
 });
 
-
 /* ELIMINAR EQUIPO */
 
 /**
  * DELETE /api/equipos/:id
- * Elimina un equipo mediante su identificador.
+ * Elimina un registro.
  */
 app.delete("/api/equipos/:id", async (req, res) => {
 
   try {
 
-    // Obtiene el ID enviado en la URL.
     const { id } = req.params;
 
-    // Elimina el documento correspondiente.
     await db.collection("datos").deleteOne({
+
       _id: new ObjectId(id),
+
     });
 
-    // Confirma la eliminación.
     res.json({
+
       mensaje: "Registro eliminado",
+
     });
 
   } catch (error) {
 
-    // Muestra el error en consola.
     console.error(error);
 
-    // Devuelve un error del servidor.
     res.status(500).json(error);
 
   }

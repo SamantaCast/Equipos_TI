@@ -23,6 +23,12 @@ const userSchema = new mongoose.Schema(
       required: true,
     },
 
+    // Género del usuario.
+    genero: {
+      type: String,
+      required: true,
+    },
+
     // Rol asignado al usuario.
     // Si no se especifica, se asigna "admin" por defecto.
     rol: {
