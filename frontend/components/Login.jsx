@@ -115,18 +115,23 @@ export default function Login() {
       /* GUARDA LOS DATOS DEL USUARIO */
 
       localStorage.setItem(
-        "usuario",
-        JSON.stringify(datos.usuario)
+      "usuario",
+      JSON.stringify(datos.usuario)
+    );
+
+    if (datos.token) {
+
+      localStorage.setItem(
+        "token",
+        datos.token
       );
 
-      if (datos.token) {
+    }
 
-        localStorage.setItem(
-          "token",
-          datos.token
-        );
-
-      }
+    localStorage.setItem(
+      "ultimaActividad",
+      Date.now().toString()
+    );
 
       /* REDIRECCIONA AL DASHBOARD */
 

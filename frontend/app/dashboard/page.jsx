@@ -12,6 +12,7 @@ import EquipmentTable from "./components/EquipmentTable";
 import Pagination from "./components/Pagination";
 import EquipmentModal from "./components/EquipmentModal";
 
+
 /* UTILIDADES */
 
 import { exportarExcel } from "../utils/exportExcel";
@@ -825,6 +826,84 @@ export default function DashboardPage() {
 
   }, [autorizado]);
 
+  useEffect(() => {
+
+  const TIEMPO_INACTIVIDAD = 30 * 60 * 1000;
+  let cerrandoSesion = false;
+
+  const actualizarActividad = () => {
+
+    localStorage.setItem(
+      "ultimaActividad",
+      Date.now().toString()
+    );
+
+  };
+
+  const verificarSesion = () => {
+
+    const ultimaActividad = Number(
+      localStorage.getItem("ultimaActividad")
+    );
+
+    if (!ultimaActividad) {
+      actualizarActividad();
+      return;
+    }
+
+    if (
+      Date.now() - ultimaActividad >
+      TIEMPO_INACTIVIDAD
+    ) {
+
+      if (cerrandoSesion) return;
+
+      cerrandoSesion = true;
+
+      localStorage.removeItem("usuario");
+      localStorage.removeItem("token");
+      localStorage.removeItem("ultimaActividad");
+
+      Swal.fire({
+
+        icon: "warning",
+        title: "Sesión expirada",
+        text: "La sesión se cerró por inactividad.",
+        confirmButtonColor: "#8b1e3f",
+
+      }).then(() => {
+
+        router.replace("/");
+
+      });
+
+    }
+
+  };
+
+  window.addEventListener("mousemove", actualizarActividad);
+  window.addEventListener("keydown", actualizarActividad);
+  window.addEventListener("click", actualizarActividad);
+  window.addEventListener("scroll", actualizarActividad);
+
+  const intervalo = setInterval(
+    verificarSesion,
+    10000
+  );
+
+  return () => {
+
+    clearInterval(intervalo);
+
+    window.removeEventListener("mousemove", actualizarActividad);
+    window.removeEventListener("keydown", actualizarActividad);
+    window.removeEventListener("click", actualizarActividad);
+    window.removeEventListener("scroll", actualizarActividad);
+
+  };
+
+}, [router]);
+
 
   /* FILTRADO DE REGISTROS
      Aplica la búsqueda general y todos los filtros. */
@@ -1026,6 +1105,24 @@ useEffect(() => {
 
 ]);
 
+const cerrarSesionPorToken = async () => {
+
+  localStorage.removeItem("usuario");
+  localStorage.removeItem("token");
+  localStorage.removeItem("ultimaActividad");
+
+  await Swal.fire({
+
+    icon: "warning",
+    title: "Sesión expirada",
+    text: "Debe iniciar sesión nuevamente.",
+    confirmButtonColor: "#8b1e3f",
+
+  });
+
+  router.replace("/");
+
+};
 
 /* OBTENER REGISTROS
    Consulta todos los equipos almacenados en
@@ -1067,6 +1164,13 @@ const obtenerEquipos = async () => {
       },
 
     });
+
+      if (respuesta.status === 401) {
+
+      await cerrarSesionPorToken();
+      return;
+
+    }
 
     console.log(
       "Status:",
@@ -1121,6 +1225,7 @@ const cerrarSesion = () => {
 
     localStorage.removeItem("usuario");
     localStorage.removeItem("token");
+    localStorage.removeItem("ultimaActividad");
 
     /* REDIRECCIONAR */
 
@@ -1420,16 +1525,21 @@ const handleSave = async () => {
 
           method: "POST",
           headers: {
-
             "Content-Type": "application/json",
-
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
-
           body: JSON.stringify(registroMongo),
 
         }
 
       );
+
+      if (respuesta.status === 401) {
+
+        await cerrarSesionPorToken();
+        return;
+
+      }
 
       /* Obtener respuesta */
 
@@ -1461,24 +1571,27 @@ const handleSave = async () => {
 
       /* Enviar actualización */
 
-      await fetch(
+      const respuesta = await fetch(
 
         `${process.env.NEXT_PUBLIC_API_URL}/api/equipos/${editingId}`,
-
         {
-
           method: "PUT",
           headers: {
-
             "Content-Type": "application/json",
-
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
-
           body: JSON.stringify(registroMongo),
 
         }
 
       );
+
+      if (respuesta.status === 401) {
+
+        await cerrarSesionPorToken();
+        return;
+
+      }
 
       /* Actualizar información local */
 
@@ -1603,19 +1716,29 @@ const handleDelete = async (id) => {
   try {
 
     /* ELIMINAR REGISTRO */
+    const respuesta = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/api/equipos/${id}`,
 
-    // Envía la solicitud para eliminar el registro.
-    await fetch(
+    {
 
-      `${process.env.NEXT_PUBLIC_API_URL}/api/equipos/${id}`,
+      method: "DELETE",
 
-      {
+      headers: {
 
-        method: "DELETE",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
 
-      }
+      },
 
-    );
+    }
+
+  );
+
+  if (respuesta.status === 401) {
+
+  await cerrarSesionPorToken();
+  return;
+
+}
 
     /* ACTUALIZAR INFORMACIÓN */
 

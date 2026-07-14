@@ -7,35 +7,48 @@ module.exports = (req, res, next) => {
     // Obtiene el encabezado Authorization de la solicitud.
     const auth = req.headers.authorization;
 
-    // Verifica si el encabezado de autorización existe.
+    // Verifica si el encabezado existe.
     if (!auth) {
 
-        // Si no existe, responde con un error de acceso no autorizado.
         return res.status(401).json({
             mensaje: "No autorizado"
         });
 
     }
 
-    // Extrae el token del formato: "Bearer <token>".
+    // Extrae el token.
     const token = auth.split(" ")[1];
 
     try {
 
-        // Verifica que el token sea válido utilizando la clave secreta.
-        jwt.verify(
+        // Verifica el token.
+        const decoded = jwt.verify(
             token,
             process.env.JWT_SECRET
         );
 
-        // Si el token es válido, permite continuar con la siguiente función.
+        // Guarda la información del usuario para utilizarla en otras rutas.
+        req.usuario = decoded;
+
+        // Continúa con la siguiente función.
         next();
 
-    } catch {
+    } catch (error) {
 
-        // Si el token es inválido o expiró, responde con un error.
+        // El token expiró.
+        if (error.name === "TokenExpiredError") {
+
+            return res.status(401).json({
+                mensaje: "La sesión ha expirado.",
+                expirado: true
+            });
+
+        }
+
+        // Token inválido.
         return res.status(401).json({
-            mensaje: "Token inválido"
+            mensaje: "Token inválido.",
+            expirado: false
         });
 
     }
